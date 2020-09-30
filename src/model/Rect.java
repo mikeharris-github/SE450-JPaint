@@ -4,42 +4,68 @@ import model.interfaces.IShape;
 
 import java.awt.*;
 
-public class Rect implements IShape {
+final class Rect implements IShape {
 
-    private Point startPoint = new Point(0,0);
-    private Point endPoint = new Point(0,0);
 
-    private int width;
-    private int height;
+    private Point startPoint;
+    private Point endPoint;
+    int width;
+    int height;
+    Graphics2D g;
 
-    public Rect() {};
+    public void Rect(Point startPoint, Point endPoint, int width, int height) {
+        this.startPoint = startPoint;
+        this.endPoint = endPoint;
+        this.width = width;
+        this.height = height;
+
+    }
+
+    public void draw() {
+        g.setColor(Color.GREEN);
+
+        int startX = Math.min(startPoint.getX(), endPoint.getX());
+        int endX = Math.max(startPoint.getX(), endPoint.getX());
+        int startY = Math.min(startPoint.getY(), endPoint.getY());
+        int endY = Math.max(startPoint.getY(), endPoint.getY());
+
+        int width = endX - startX;
+        int height = endY - startY;
+
+        g.fillRect(startX,startY,width, height);
+    }
 
     @Override
-    public void setStartPoint(int x, int y) { }
+    public void setStartPoint(Point startPoint) {
+        this.startPoint = startPoint;
+    }
     @Override
-    public void setEndPoint(int x, int y) { }
+    public void setEndPoint(Point endPoint) {
+        this.endPoint = endPoint;
+    }
 
-    public Point getStartPoint() { return startPoint; }
-    public Point getEndPoint() { return endPoint; }
+    @Override
+    public void setG(Graphics2D g) {
+        this.g = g;
+    }
+
+    @Override
+    public void setColor(Color color) { }
+
+//    int startX = Math.min(startPoint.getX(), endPoint.getX());
+//    int endX = Math.max(startPoint.getX(), endPoint.getX());
+//    int startY = Math.min(startPoint.getY(), endPoint.getY());
+//    int endY = Math.max(startPoint.getY(), endPoint.getY());
+
+//    int newWidth = endX - startX;
+//    int newHeight = endY - startY;
+//
+//    Point newStartPoint = new Point(startX,startY);
+//    Point newEndPoint = new Point(endX,endY);
+
+
+//    public Rect toRect(){
+//        return new Rect(newStartPoint,newEndPoint,newWidth,newHeight);
+//    }
 
 }
-
-
-
-
-
-//**********
-//**********
-//**********
-//**********
-
-//    private static int x;
-//    private static int y;
-//    private static int width;
-//    private static int height;
-
-//    //Set Methods
-//    public void setX(int x) {this.x = x;}
-//    public void setY(int y) {this.y = y;}
-//    public void setWidth(int width) {this.width=width;}
-//    public void setHeight(int height) {this.height = height;}

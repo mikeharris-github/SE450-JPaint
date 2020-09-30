@@ -4,7 +4,6 @@ import model.interfaces.ICommand;
 import model.Point;
 
 import java.awt.*;
-import java.io.IOException;
 
 public class DrawCommand implements ICommand {
 
@@ -12,7 +11,7 @@ public class DrawCommand implements ICommand {
     Point endPoint;
     Graphics2D g;
 
-    public DrawCommand(Graphics2D g, Point startPoint, Point endPoint){
+    public DrawCommand(Graphics2D g, Point startPoint, Point endPoint, ShapeList shapeList){
         this.g = g;
         this.startPoint = startPoint;
         this.endPoint = endPoint;
@@ -20,9 +19,8 @@ public class DrawCommand implements ICommand {
 
 
     @Override
-    public void run() throws IOException {
+    public void run() {
         System.out.println("Draw Command Executed!");
-        g.setColor(Color.green);
 
         int startX = Math.min(startPoint.getX(), endPoint.getX());
         int endX = Math.max(startPoint.getX(), endPoint.getX());
@@ -39,4 +37,5 @@ public class DrawCommand implements ICommand {
         //add to ShapeList
 
     }
+
 }

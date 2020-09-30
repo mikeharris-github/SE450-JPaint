@@ -5,6 +5,7 @@ import controller.IJPaintController;
 import controller.JPaintController;
 import model.*;
 import model.Point;
+import model.interfaces.ICommand;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
@@ -15,8 +16,7 @@ import view.interfaces.IUiModule;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-
+import model.ShapeList;
 
 public class Main {
 
@@ -28,19 +28,18 @@ public class Main {
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
 
-
-//        RectBuilder rb = new RectBuilder();
-        Graphics2D g = paintCanvas.getGraphics2D();
-        Point startPoint = new Point(0,0);
-        Point endPoint = new Point(0,0);
-
-
         MouseAdapter ma = new MouseAdapter() {
+            Graphics2D g = paintCanvas.getGraphics2D();
+            Point startPoint = new Point(0,0);
+            Point endPoint = new Point(0,0);
+            ShapeList shapeList = new ShapeList(paintCanvas);
+
             @Override
             public void mousePressed(MouseEvent e) {
                 System.out.println("Mouse clicked: " + e.getX() + "; " +  e.getY());
                 startPoint.setX(e.getX());
                 startPoint.setY(e.getY());
+
             }
 
             @Override
@@ -49,22 +48,16 @@ public class Main {
                 endPoint.setX(e.getX());
                 endPoint.setY(e.getY());
 
-                //we should be creating a shape, NOT draw
-
-                DrawCommand draw = new DrawCommand(g, startPoint, endPoint);
-                try {
-                    draw.run();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
+                ICommand createShapeCommand = new CreateShape(startPoint,endPoint, g, shapeList);
+                createShapeCommand.run();
             }
-
-            };
-
+        };
         paintCanvas.addMouseListener(ma);
 
+
+
     }
+
 }
 
 

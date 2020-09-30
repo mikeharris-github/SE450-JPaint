@@ -1,56 +1,55 @@
 package model;
 
+import model.interfaces.IShape;
 import model.interfaces.ICommand;
-import model.DrawCommand;
-import javax.xml.stream.events.StartDocument;
 import java.awt.*;
-import java.io.IOException;
+
 
 public class CreateShape implements ICommand {
 
-    Point startPoint;
-    Point endPoint;
+    //create a shape via the Ishape interface
+    //add the shape to the ShapeList
+    //invoke the draw command
+
+    private static Point startPoint;
+    private static Point endPoint;
     Graphics2D g;
+    ShapeList shapeList;
 
-    DrawCommand draw;
 
-
-    public CreateShape(Point startPoint, Point endPoint){
+    public CreateShape(Point startPoint, Point endPoint, Graphics2D g, ShapeList shapeList){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-
-        int startX = Math.min(startPoint.getX(), endPoint.getX());
-        int endX = Math.max(startPoint.getX(), endPoint.getX());
-        int startY = Math.min(startPoint.getY(), endPoint.getY());
-        int endY = Math.max(startPoint.getY(), endPoint.getY());
-
-        int width = endX - startX;
-        int height = endY - startY;
-    }
-
-    @Override
-    public void run() throws IOException {
-        DrawCommand draw = new DrawCommand(g, startPoint, endPoint);
+        this.g = g;
+        this.shapeList = shapeList;
 
     }
 
-    Rect rect = new Rect();
 
-//    public class Rect {
-//
-//        private int x;
-//        private int y;
-//        private int width;
-//        private int height;
-//
-//        public Rect(int x, int y, int width, int height) {
-//            this.x = x;
-//            this.y = y;
-//            this.width = width;
-//            this.height = height;
-//        }
-//
-//    }
+    public void run() {
+
+        int width = 0;
+        int height=0;
+        Rect rect = new Rect();
+        //        System.out.println("CreateShape Command Executed!");
+        rect.setStartPoint(startPoint);
+        rect.setEndPoint(endPoint);
+        rect.setG(g);
+        rect.setColor(Color.GREEN);
+
+
+//        rect.toRect();
+//        System.out.println("startPoint: " + rect.getStartPoint().getX() + "; y: " + rect.getStartPoint().getY());
+//        System.out.println("Rectangle Created");
+//        add shape to ShapeList
+//        System.out.println("about to test shapelist...");
+        shapeList.addShape(rect,g);
+//        shapeList.shapeListCount();
+
+        //add itself to the command history
+
+    }
+
 
 
 }

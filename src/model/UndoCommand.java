@@ -2,13 +2,10 @@ package model;
 
 import model.interfaces.ICommand;
 
-import java.io.IOException;
-
 public class UndoCommand implements ICommand {
-
-
     @Override
-    public void run() throws IOException {
-
+    public void run() {
+        System.out.println("Undo Called");
+        CommandHistory.undo();
     }
 }
