@@ -14,10 +14,11 @@ public class CreateShape implements ICommand, IUndoable {
     //add the shape to the ShapeList
     //invoke the draw command
 
-    private Point startPoint;
-    private Point endPoint;
+    Point startPoint;
+    Point endPoint;
     Graphics2D g;
-    ShapeList shapeList;
+    private ShapeList shapeList;
+    IShape shape;
 
 
     public CreateShape(Point startPoint, Point endPoint, Graphics2D g, ShapeList shapeList){
@@ -31,11 +32,13 @@ public class CreateShape implements ICommand, IUndoable {
     public void run() {
         System.out.println("RUN EXECUTED");
 
-        Rect o = null;
-        Rect rect = new Rect(startPoint,endPoint);
-        o = rect.immutableObject();
+        System.out.println("Beginning startpoint: " + startPoint.getX() + "; " + startPoint.getY());
 
-        System.out.println("here are o's info: \n" + o.startPoint.getX() + ", " + o.endPoint.getY());
+        shape = new Rect(startPoint,endPoint);
+
+
+//        System.out.println("here are o's info: \n"
+//                + shape.startPoint.getX() + ", " + o.endPoint.getY());
 
 
 //        Rect rect = new Rect(startPoint,endPoint,width,height);
@@ -50,7 +53,8 @@ public class CreateShape implements ICommand, IUndoable {
 //        System.out.println("Rectangle Created");
 //        add shape to ShapeList
 //        System.out.println("about to test shapelist...");
-        shapeList.addShape(o,g);
+        shape.draw(g);
+        shapeList.addShape(shape,g);
         CommandHistory.add(this);
 
         //add itself to the command history

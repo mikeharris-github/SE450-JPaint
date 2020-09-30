@@ -12,19 +12,17 @@ class CommandHistory {
 	public static void add(IUndoable cmd) {
 		undoStack.push(cmd);
 		redoStack.clear();
-		System.out.println("CommandHistory.add triggered!");
+//		System.out.println("CommandHistory.add triggered!");
 	}
 
 	public static boolean undo() {
-		System.out.println("CommandHistory.undo triggered!");
-
 		boolean result = !undoStack.empty();
 		if (result) {
 			IUndoable c = undoStack.pop();
 			redoStack.push(c);
 			c.undo();
 		}
-		System.out.println("CommandHistory.undo finished!");
+//		System.out.println("CommandHistory.undo finished!");
 
 		return result;
 	}

@@ -8,19 +8,19 @@ import model.interfaces.IShape;
 import view.gui.PaintCanvas;
 import view.interfaces.PaintCanvasBase;
 
-public class ShapeList implements ICommand {
+public class ShapeList {
 
     public static ArrayList<IShape> shapeList = new ArrayList<IShape>();
+    public static ArrayList<IShape> deletedShapeList = new ArrayList<IShape>();
 
     public ShapeList(PaintCanvasBase paintCanvas) { }
-
-
 
     //add shape to shape list
     public void addShape(IShape shape, Graphics2D g){
         System.out.println("Shape: " + shape);
 //        System.out.println("Triggered!");
         this.shapeList.add(shape);
+        this.deletedShapeList.add(shape);
 //        System.out.println("Rectangle added to ShapeList!");
         shapeListDrawer(this.shapeList,g);
     }
@@ -45,9 +45,21 @@ public class ShapeList implements ICommand {
     public static void removeShape(){
         System.out.println("RemoveShape Triggered!!!");
 //        System.out.println("List size before: " + shapeList.size());
+        System.out.println("Removing shape: " + shapeList.get(shapeList.size()-1));
         shapeList.remove((shapeList.size()-1));
-//        System.out.println("List size after: " + shapeList.size());
     }
+
+    public static void redoShape(){
+        addDeletedShapes();
+    }
+
+    public static void addDeletedShapes(){
+        System.out.println("AddDeletedShapes called");
+        IShape dShape = deletedShapeList.get(deletedShapeList.size()-1);
+        System.out.println("Adding shape: " + dShape);
+        shapeList.add(dShape);
+    }
+
 
 
     //count of items in the list
@@ -68,8 +80,8 @@ public class ShapeList implements ICommand {
 //        }
 //    }
 
-    @Override
-    public void run() {
-        ICommand undoCommand = new UndoCommand();
-    }
+//    @Override
+//    public void run() {
+//        ICommand undoCommand = new UndoCommand();
+//    }
 }

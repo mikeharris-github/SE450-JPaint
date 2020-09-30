@@ -7,8 +7,8 @@ import java.awt.*;
 final class Rect implements IShape {
 
     IShape shape = null;
-    public final Point startPoint;
-    public final Point endPoint;
+    final Point startPoint;
+    final Point endPoint;
 //    private int width;
 //    private int height;
 //    Graphics2D g;
@@ -50,7 +50,7 @@ final class Rect implements IShape {
 //        System.out.println(startPoint.getX() + ", " + endPoint.getX());
 //        System.out.println("Start X: " + startX);
         int endX = Math.max(startPoint.getX(), endPoint.getX());
-        System.out.println("End X: " + endX);
+//        System.out.println("End X: " + endX);
 
         int startY = Math.min(startPoint.getY(), endPoint.getY());
         int endY = Math.max(startPoint.getY(), endPoint.getY());
