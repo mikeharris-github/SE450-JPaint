@@ -6,26 +6,52 @@ import java.awt.*;
 
 final class Rect implements IShape {
 
+    IShape shape = null;
+    public final Point startPoint;
+    public final Point endPoint;
+//    private int width;
+//    private int height;
+//    Graphics2D g;
 
-    private Point startPoint;
-    private Point endPoint;
-    int width;
-    int height;
-    Graphics2D g;
 
-    public void Rect(Point startPoint, Point endPoint, int width, int height) {
+//    public Rect(Point startPoint, Point endPoint, int width, int height) {
+//        this.startPoint = startPoint;
+//        this.endPoint = endPoint;
+//        this.width = width;
+//        this.height = height;
+//        return;
+//    }
+
+    public Rect(Point startPoint, Point endPoint){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.width = width;
-        this.height = height;
-
     }
 
-    public void draw() {
+    public Point getStartPoint() {
+        return startPoint;
+    }
+
+    public Point getEndPoint() {
+        return endPoint;
+    }
+    final Rect immutableObject(){
+        final Point sStartPoint = getStartPoint();
+        final Point sEndPoint = getEndPoint();
+        return new Rect(sStartPoint,sEndPoint);
+    }
+
+//    @Override
+    public void draw(Graphics2D g) {
+
         g.setColor(Color.GREEN);
 
+//        System.out.println("DRAW METHOD******");
         int startX = Math.min(startPoint.getX(), endPoint.getX());
+//        System.out.println(startPoint.getX() + ", " + endPoint.getX());
+//        System.out.println("Start X: " + startX);
         int endX = Math.max(startPoint.getX(), endPoint.getX());
+        System.out.println("End X: " + endX);
+
         int startY = Math.min(startPoint.getY(), endPoint.getY());
         int endY = Math.max(startPoint.getY(), endPoint.getY());
 
@@ -34,23 +60,7 @@ final class Rect implements IShape {
 
         g.fillRect(startX,startY,width, height);
     }
-
-    @Override
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
-    }
-    @Override
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    @Override
-    public void setG(Graphics2D g) {
-        this.g = g;
-    }
-
-    @Override
-    public void setColor(Color color) { }
+}
 
 //    int startX = Math.min(startPoint.getX(), endPoint.getX());
 //    int endX = Math.max(startPoint.getX(), endPoint.getX());
@@ -68,4 +78,3 @@ final class Rect implements IShape {
 //        return new Rect(newStartPoint,newEndPoint,newWidth,newHeight);
 //    }
 
-}

@@ -5,27 +5,22 @@ import java.util.ArrayList;
 
 import model.interfaces.ICommand;
 import model.interfaces.IShape;
-import model.interfaces.IUndoable;
 import view.gui.PaintCanvas;
 import view.interfaces.PaintCanvasBase;
 
-public class ShapeList {
+public class ShapeList implements ICommand {
 
-    public ArrayList<IShape> shapeList = new ArrayList<>();
+    public static ArrayList<IShape> shapeList = new ArrayList<IShape>();
 
     public ShapeList(PaintCanvasBase paintCanvas) { }
 
-    Graphics2D g;
 
-    int canvasWidth;
-    int canvasHeight;
-    private PaintCanvas paintCanvas;
 
     //add shape to shape list
     public void addShape(IShape shape, Graphics2D g){
+        System.out.println("Shape: " + shape);
 //        System.out.println("Triggered!");
         this.shapeList.add(shape);
-
 //        System.out.println("Rectangle added to ShapeList!");
         shapeListDrawer(this.shapeList,g);
     }
@@ -36,19 +31,22 @@ public class ShapeList {
         g.setColor(Color.WHITE);
         g.fillRect(0,0,9999,9999);
         for (IShape s: shapeList){
+            System.out.println(s);
 //            System.out.println(s.getStartPoint()  + ", " + s.getEndPoint());
-            s.draw();
-            System.out.println("draw done");
+            s.draw(g);
+//            ICommand drawCommand = new DrawCommand(g,s);
+//            drawCommand.run();
+//            System.out.println("draw done");
 //            System.out.println("boom... drawn");
         }
         System.out.println("\n****PRINT DONE***\n");
     }
 
-    public void removeShape(IShape shape){
-        System.out.println("List size before: " + shapeList.size());
-        shapeList.remove(shape);
+    public static void removeShape(){
+        System.out.println("RemoveShape Triggered!!!");
+//        System.out.println("List size before: " + shapeList.size());
         shapeList.remove((shapeList.size()-1));
-        System.out.println("List size after: " + shapeList.size());
+//        System.out.println("List size after: " + shapeList.size());
     }
 
 
@@ -59,19 +57,19 @@ public class ShapeList {
 
 
     //get a shape from shape list
-    public IShape getShape(int i){
-        return shapeList.get(i);
-    }
-
-
-    public void listAllShapes() {
-        for(IShape shape: shapeList){
-            System.out.println(shape);
-        }
-    }
-
-//    @Override
-//    public void run() {
-//        ICommand undoCommand = new UndoCommand();
+//    public IShape getShape(int i){
+//        return shapeList.get(i);
 //    }
+
+
+//    public void listAllShapes() {
+//        for(IShape shape: shapeList){
+//            System.out.println(shape);
+//        }
+//    }
+
+    @Override
+    public void run() {
+        ICommand undoCommand = new UndoCommand();
+    }
 }

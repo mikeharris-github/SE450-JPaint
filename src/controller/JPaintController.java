@@ -6,6 +6,7 @@ import model.UndoCommand;
 import model.interfaces.IApplicationState;
 import view.EventName;
 import view.interfaces.IUiModule;
+import model.ShapeList;
 
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
