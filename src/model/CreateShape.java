@@ -1,64 +1,35 @@
 package model;
 
-import model.interfaces.IShape;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
+import model.persistence.ApplicationState;
 
-import java.awt.*;
+import java.awt.Point;
 
 
 
 public class CreateShape implements ICommand, IUndoable {
 
-    //create a shape via the Ishape interface
-    //add the shape to the ShapeList
-    //invoke the draw command
-
-    Point startPoint;
-    Point endPoint;
-    Graphics2D g;
+    private Point startPoint;
+    private Point endPoint;
     private ShapeList shapeList;
-    IShape shape;
+    private ApplicationState appState;
 
 
-    public CreateShape(Point startPoint, Point endPoint, Graphics2D g, ShapeList shapeList){
+    public CreateShape(Point startPoint, Point endPoint, ShapeList shapeList, ApplicationState appState){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
-        this.g = g;
         this.shapeList = shapeList;
+        this.appState = appState;
     }
 
-
     public void run() {
-        System.out.println("RUN EXECUTED");
 
-        System.out.println("Beginning startpoint: " + startPoint.getX() + "; " + startPoint.getY());
-
-        shape = new Rect(startPoint,endPoint);
-
-
-//        System.out.println("here are o's info: \n"
-//                + shape.startPoint.getX() + ", " + o.endPoint.getY());
-
-
-//        Rect rect = new Rect(startPoint,endPoint,width,height);
-        //        System.out.println("CreateShape Command Executed!");
-//        rect.setStartPoint(startPoint);
-//        rect.setEndPoint(endPoint);
-//        rect.setG(g);
-//        rect.setColor(Color.GREEN);
-//        System.out.println("startPoint \nx: " + rect.getStartPoint().getX() + "; \ny: " + rect.getStartPoint().getY());
-//        System.out.println("endPoint \nx: " + rect.getEndPoint().getX() + "; \ny: " + rect.getEndPoint().getY());
-
-//        System.out.println("Rectangle Created");
-//        add shape to ShapeList
-//        System.out.println("about to test shapelist...");
-        shape.draw(g);
-        shapeList.addShape(shape,g);
+//        System.out.println("Start Points for x: " + this.startPoint.getX() + ", " + this.startPoint.getY());
+        Rect rect = new Rect(startPoint,endPoint);
+        System.out.println("The shape type is: " + appState.getActiveShapeType());
+        shapeList.addShape(rect);
         CommandHistory.add(this);
-
-        //add itself to the command history
-
     }
 
 
@@ -71,3 +42,4 @@ public class CreateShape implements ICommand, IUndoable {
 
     }
 }
+

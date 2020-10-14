@@ -3,78 +3,47 @@ package model;
 import model.interfaces.IShape;
 
 import java.awt.*;
+import java.awt.Point;
 
 final class Rect implements IShape {
 
-    IShape shape = null;
-    final Point startPoint;
-    final Point endPoint;
-//    private int width;
-//    private int height;
-//    Graphics2D g;
+    private final Point startPoint;
+    private final Point endPoint;
 
-
-//    public Rect(Point startPoint, Point endPoint, int width, int height) {
-//        this.startPoint = startPoint;
-//        this.endPoint = endPoint;
-//        this.width = width;
-//        this.height = height;
-//        return;
-//    }
-
-    public Rect(Point startPoint, Point endPoint){
+    Rect(Point startPoint, Point endPoint) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
     }
 
-    public Point getStartPoint() {
-        return startPoint;
-    }
-
-    public Point getEndPoint() {
-        return endPoint;
-    }
-    final Rect immutableObject(){
-        final Point sStartPoint = getStartPoint();
-        final Point sEndPoint = getEndPoint();
-        return new Rect(sStartPoint,sEndPoint);
-    }
-
-//    @Override
+    @Override
     public void draw(Graphics2D g) {
 
-        g.setColor(Color.GREEN);
+        int startX = (int)Math.min(this.startPoint.getX(), this.endPoint.getX());
+        int endX = (int)Math.max(this.startPoint.getX(), this.endPoint.getX());
+        int startY = (int)Math.min(this.startPoint.getY(), this.endPoint.getY());
+        int endY = (int)Math.max(this.startPoint.getY(), this.endPoint.getY());
 
-//        System.out.println("DRAW METHOD******");
-        int startX = Math.min(startPoint.getX(), endPoint.getX());
-//        System.out.println(startPoint.getX() + ", " + endPoint.getX());
-//        System.out.println("Start X: " + startX);
-        int endX = Math.max(startPoint.getX(), endPoint.getX());
-//        System.out.println("End X: " + endX);
 
-        int startY = Math.min(startPoint.getY(), endPoint.getY());
-        int endY = Math.max(startPoint.getY(), endPoint.getY());
-
-        int width = endX - startX;
-        int height = endY - startY;
-
-        g.fillRect(startX,startY,width, height);
-    }
-}
-
-//    int startX = Math.min(startPoint.getX(), endPoint.getX());
-//    int endX = Math.max(startPoint.getX(), endPoint.getX());
-//    int startY = Math.min(startPoint.getY(), endPoint.getY());
-//    int endY = Math.max(startPoint.getY(), endPoint.getY());
-
-//    int newWidth = endX - startX;
-//    int newHeight = endY - startY;
+        int width = (int)endX - (int)startX;
+        int height = (int)endY - (int)startY;
 //
-//    Point newStartPoint = new Point(startX,startY);
-//    Point newEndPoint = new Point(endX,endY);
+//
+        g.setColor(Color.green);
+        g.fillRect(startX,startY,width, height);
+//        System.out.println("final test: " + (int)startX + ", " + (int)startY);
+//        System.out.println("final test: " + (int)endX + ", " + (int)endY);
 
 
-//    public Rect toRect(){
-//        return new Rect(newStartPoint,newEndPoint,newWidth,newHeight);
-//    }
+    }
 
+    @Override
+    public model.Point getStartPoint() {
+        return null;
+    }
+
+    @Override
+    public model.Point getEndPoint() {
+        return null;
+    }
+
+}

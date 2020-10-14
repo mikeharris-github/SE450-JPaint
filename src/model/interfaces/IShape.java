@@ -5,10 +5,9 @@ import java.awt.*;
 
 public interface IShape {
 
-//    void setStartPoint(Point startPoint);
-//    void setEndPoint(Point endPoint);
-//    void setG(Graphics2D g);
-//    void setColor(Color color);
-
     void draw(Graphics2D g);
+
+    Point getStartPoint();
+
+    Point getEndPoint();
 }

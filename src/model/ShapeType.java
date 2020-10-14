@@ -1,7 +1,7 @@
 package model;
 
 public enum ShapeType {
-    //ELLIPSE,  >>will add shape later
+    ELLIPSE,
     RECTANGLE,
-    //TRIANGLE  >>will add shape later
+    TRIANGLE
 }

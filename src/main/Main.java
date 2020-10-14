@@ -3,9 +3,7 @@ package main;
 
 import controller.IJPaintController;
 import controller.JPaintController;
-import model.*;
-import model.Point;
-import model.interfaces.ICommand;
+import controller.MouseHandler;
 import model.persistence.ApplicationState;
 import view.gui.Gui;
 import view.gui.GuiWindow;
@@ -13,9 +11,6 @@ import view.gui.PaintCanvas;
 import view.interfaces.IGuiWindow;
 import view.interfaces.PaintCanvasBase;
 import view.interfaces.IUiModule;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import model.ShapeList;
 
 public class Main {
@@ -24,37 +19,14 @@ public class Main {
         PaintCanvasBase paintCanvas = new PaintCanvas();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
+        //Application State
         ApplicationState appState = new ApplicationState(uiModule);
+        System.out.println("App state: " + appState.getActiveShapeType());
         IJPaintController controller = new JPaintController(uiModule, appState);
         controller.setup();
 
-        MouseAdapter ma = new MouseAdapter() {
-            Graphics2D g = paintCanvas.getGraphics2D();
-            Point startPoint = new Point(0,0);
-            Point endPoint = new Point(0,0);
-            ShapeList shapeList = new ShapeList(paintCanvas);
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                System.out.println("Mouse clicked: " + e.getX() + "; " +  e.getY());
-                startPoint.setX(e.getX());
-                startPoint.setY(e.getY());
-
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                System.out.println("Mouse released: " + e.getX() + "; " + e.getY());
-                endPoint.setX(e.getX());
-                endPoint.setY(e.getY());
-
-                ICommand createShapeCommand = new CreateShape(startPoint,endPoint, g, shapeList);
-                createShapeCommand.run();
-            }
-        };
-        paintCanvas.addMouseListener(ma);
-
-
+        ShapeList shapeList = new ShapeList(paintCanvas);
+        paintCanvas.addMouseListener(new MouseHandler(paintCanvas,shapeList,appState));
 
     }
 
@@ -63,26 +35,7 @@ public class Main {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // For example purposes only; remove all lines below from your final project.
+// For example purposes only; remove all lines below from your final project.
 
 
 
@@ -105,3 +58,4 @@ public class Main {
 //        graphics2d.drawRect(7, 8, 210, 410);
 //    }
 //}
+

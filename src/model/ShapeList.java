@@ -2,86 +2,84 @@ package model;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Stack;
 
 import model.interfaces.ICommand;
 import model.interfaces.IShape;
+import model.interfaces.IUndoable;
 import view.gui.PaintCanvas;
+import view.interfaces.IEventCallback;
 import view.interfaces.PaintCanvasBase;
 
-public class ShapeList {
+public class ShapeList implements ICommand {
 
-    public static ArrayList<IShape> shapeList = new ArrayList<IShape>();
-    public static ArrayList<IShape> deletedShapeList = new ArrayList<IShape>();
+    public static Stack<IShape> shapeList = new Stack<>();
+    public static Stack<IShape> deletedShapeList = new Stack<>();
+    private static PaintCanvas paintCanvas;
 
-    public ShapeList(PaintCanvasBase paintCanvas) { }
+    //    private final DrawCommand drawCommand;
+//    private final PaintCanvasBase paintCanvas;
 
-    //add shape to shape list
-    public void addShape(IShape shape, Graphics2D g){
-        System.out.println("Shape: " + shape);
-//        System.out.println("Triggered!");
-        this.shapeList.add(shape);
-        this.deletedShapeList.add(shape);
-//        System.out.println("Rectangle added to ShapeList!");
-        shapeListDrawer(this.shapeList,g);
+    public ShapeList(PaintCanvasBase paintCanvas) {
+        this.paintCanvas = (PaintCanvas) paintCanvas;
+    }
+    public void addShape(IShape shape){
+//        System.out.println("Shape: " + shape);
+        shapeList.add(shape);
+//        deletedShapeList.add(shape);
+        deletedShapeList.clear();
+        shapeListDrawer(shapeList);
+
     }
 
-    //ShapeList Drawer
-    public static void shapeListDrawer(ArrayList<IShape> shapeList, Graphics2D g){
-        System.out.println("number of items in list: " + shapeList.size());
-        g.setColor(Color.WHITE);
+
+    public static void shapeListDrawer(Stack<IShape> shapeList){
+
+        Graphics2D g = paintCanvas.getGraphics2D();
+        g.setColor(Color.white);
         g.fillRect(0,0,9999,9999);
         for (IShape s: shapeList){
-            System.out.println(s);
-//            System.out.println(s.getStartPoint()  + ", " + s.getEndPoint());
             s.draw(g);
-//            ICommand drawCommand = new DrawCommand(g,s);
-//            drawCommand.run();
-//            System.out.println("draw done");
-//            System.out.println("boom... drawn");
         }
-        System.out.println("\n****PRINT DONE***\n");
     }
 
     public static void removeShape(){
-        System.out.println("RemoveShape Triggered!!!");
-//        System.out.println("List size before: " + shapeList.size());
+        if(shapeList.size() == 0) {
+            System.out.println("There's nothing in the list to remove!");
+            return;
+        }
         System.out.println("Removing shape: " + shapeList.get(shapeList.size()-1));
-        shapeList.remove((shapeList.size()-1));
+//        shapeList.remove((shapeList.size()-1));
+        IShape r = shapeList.pop();
+        deletedShapeList.push(r);
+        shapeListDrawer(shapeList);
+
     }
 
     public static void redoShape(){
+        if(deletedShapeList.size() == 0) {
+            System.out.println("There's nothing to redo!");
+            return;
+        }
         addDeletedShapes();
     }
 
     public static void addDeletedShapes(){
-        System.out.println("AddDeletedShapes called");
+//        System.out.println("AddDeletedShapes called");
         IShape dShape = deletedShapeList.get(deletedShapeList.size()-1);
         System.out.println("Adding shape: " + dShape);
-        shapeList.add(dShape);
+        IShape d = deletedShapeList.pop();
+        shapeList.push(d);
+        shapeListDrawer(shapeList);
     }
 
 
 
-    //count of items in the list
-    public void shapeListCount(){
-        System.out.println("ShapeList size: " + shapeList.size());
+    @Override
+    public void run() {
+
+
     }
 
-
-    //get a shape from shape list
-//    public IShape getShape(int i){
-//        return shapeList.get(i);
-//    }
-
-
-//    public void listAllShapes() {
-//        for(IShape shape: shapeList){
-//            System.out.println(shape);
-//        }
-//    }
-
-//    @Override
-//    public void run() {
-//        ICommand undoCommand = new UndoCommand();
-//    }
 }
+

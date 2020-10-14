@@ -1,43 +1,56 @@
 package model;
 
 import model.interfaces.ICommand;
-import model.Point;
 import model.interfaces.IShape;
+import view.gui.PaintCanvas;
+import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
 
 public class DrawCommand implements ICommand {
 
-//    IShape shape;
+    private final PaintCanvasBase paintCanvas;
+    //    IShape shape;
     Point startPoint;
     Point endPoint;
+    PaintCanvasBase PaintCanvas;
     Graphics2D g;
+    ShapeList shapeList;
+
 
     IShape shape;
 
-//    public DrawCommand(Graphics2D g,IShape shape){
-//        this.g = g;
-//        this.shape = shape;
-//        System.out.println("DrawCommand Function printout:\n Shape GetX: " + shape.getStartPoint().getX() + "; Shape GetY: " + shape.getStartPoint().getY());
-//    }
+    public void updateShapeList(ShapeList shapeList){
+        this.shapeList = shapeList;
+    }
+
+    public DrawCommand(IShape shape, PaintCanvasBase paintCanvas){
+        this.shape = shape;
+        this.paintCanvas = paintCanvas;
+    }
 
 
     @Override
     public void run() {
-        System.out.println("Draw Command Executed!");
+
+        Graphics2D g = paintCanvas.getGraphics2D();
+
+//        System.out.println(shape.getStartPoint().getX());
+//        System.out.println(shape.getStartPoint().getY());
+//        System.out.println(shape.getEndPoint().getX());
+//        System.out.println(shape.getEndPoint().getY());
 //
-//
-//        int startX = Math.min(shape.;
-//        int endX = Math.max(shape.getStartPoint().getX(), shape.getEndPoint().getX());
-//        int startY = Math.min(shape.startPoint.getY(), shape.endPoint.getY());
-//        int endY = Math.max(shape.startPoint.getY(), shape.endPoint.getY());
-//
-//        int width = endX - startX;
-//        int height = endY - startY;
-//
-//
-//        g.setColor(Color.GREEN);
-//        g.fillRect(startX,startY,width, height);
+        double startX = Math.min(shape.getStartPoint().getX(), shape.getEndPoint().getX());
+        double endX = Math.max(shape.getStartPoint().getX(), shape.getEndPoint().getX());
+        double startY = Math.min(shape.getStartPoint().getY(), shape.getEndPoint().getY());
+        double endY = Math.max(shape.getStartPoint().getY(), shape.getEndPoint().getY());
+
+        double width = endX - startX;
+        double height = endY - startY;
+
+
+        g.setColor(Color.green);
+        g.fillRect((int)startX,(int)startY,(int)width, (int)height);
 
         //add to ShapeList
 

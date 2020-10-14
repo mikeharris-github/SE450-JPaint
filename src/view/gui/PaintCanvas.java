@@ -6,6 +6,7 @@ import view.interfaces.PaintCanvasBase;
 
 import javax.swing.JComponent;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +14,11 @@ public class PaintCanvas extends PaintCanvasBase {
 
     public Graphics2D getGraphics2D() {
         return (Graphics2D)getGraphics();
+    }
+
+    class MyMouseListener extends MouseAdapter{
+
+
     }
 
 

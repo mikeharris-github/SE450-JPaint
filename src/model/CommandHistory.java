@@ -2,7 +2,6 @@ package model;
 
 import model.interfaces.IUndoable;
 
-import java.awt.*;
 import java.util.Stack;
 
 class CommandHistory {
