@@ -19,14 +19,12 @@ public class Main {
         PaintCanvasBase paintCanvas = new PaintCanvas();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
-        //Application State
         ApplicationState appState = new ApplicationState(uiModule);
-        System.out.println("App state: " + appState.getActiveShapeType());
-        IJPaintController controller = new JPaintController(uiModule, appState);
+        ShapeList shapeList = new ShapeList(paintCanvas,appState);
+        IJPaintController controller = new JPaintController(uiModule, appState, shapeList);
         controller.setup();
 
-        ShapeList shapeList = new ShapeList(paintCanvas);
-        paintCanvas.addMouseListener(new MouseHandler(paintCanvas,shapeList,appState));
+        paintCanvas.addMouseListener(new MouseHandler(appState,paintCanvas,shapeList));
 
     }
 

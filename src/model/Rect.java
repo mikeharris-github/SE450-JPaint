@@ -32,8 +32,6 @@ final class Rect implements IShape {
         g.fillRect(startX,startY,width, height);
 //        System.out.println("final test: " + (int)startX + ", " + (int)startY);
 //        System.out.println("final test: " + (int)endX + ", " + (int)endY);
-
-
     }
 
     @Override

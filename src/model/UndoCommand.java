@@ -9,7 +9,6 @@ public class UndoCommand implements ICommand {
     @Override
     public void run() {
         System.out.println("Undo Called");
-        ShapeList.removeShape();
         CommandHistory.undo();
     }
 }
