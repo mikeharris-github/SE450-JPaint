@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -15,29 +16,33 @@ import view.interfaces.PaintCanvasBase;
 
 public class ShapeList {
 
-    public static Stack<Shape> shapeList = new Stack<>();
-    public static Stack<Shape> deletedShapeList = new Stack<>();
-    public static Stack<Shape> selectedShapeList = new Stack<>();
-    public static Stack<Shape> copiedShapeList = new Stack<>();
+//    public static Stack<Shape> shapeList = new Stack<>();
+//    public static Stack<Shape> deletedShapeList = new Stack<>();
+//    public static Stack<Shape> selectedShapeList = new Stack<>();
+//    public static Stack<Shape> copiedShapeList = new Stack<>();
+
+    public static ArrayList<Shape> shapeList = new ArrayList<>();
+    public static ArrayList<Shape> deletedShapeList = new ArrayList<>();
+    public static ArrayList<Shape> selectedShapeList = new ArrayList<>();
+    public static ArrayList<Shape> copiedShapeList = new ArrayList<>();
+
     private static PaintCanvas paintCanvas;
     public ApplicationState appState;
 
-    //    private final DrawCommand drawCommand;
-//    private final PaintCanvasBase paintCanvas;
 
     public ShapeList(PaintCanvasBase paintCanvas, ApplicationState appState) {
         this.paintCanvas = (PaintCanvas) paintCanvas;
         this.appState = appState;
     }
+
     public void addShape(Shape shape){
         shapeList.add(shape);
         deletedShapeList.clear();
-        shapeListDrawer(shapeList);
+        shapeListDrawer(shapeList,selectedShapeList);
     }
 
 
-    public void shapeListDrawer(Stack<Shape> shapeList){
-        ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
+    public void shapeListDrawer(ArrayList<Shape> shapeList, ArrayList<Shape> selectedShapeList){
 
         Graphics2D g = paintCanvas.getGraphics2D();
         g.setColor(Color.white);
@@ -45,10 +50,11 @@ public class ShapeList {
         for (Shape s: shapeList){
             s.draw(g);
         }
-//        for (Shape z: selectedShapeList){
-//            System.out.println("Printing from selectedShapeList! Sahpe: " + z);
-//            shapeDecorator.outlineShape(z);
-//        }
+        for (Shape z: selectedShapeList){
+            ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
+            shapeDecorator.outlineShape(z);
+
+        }
 //        CommandHistory.add(this);
     }
 
@@ -62,7 +68,7 @@ public class ShapeList {
         shapeList.remove(lastShape);
         deletedShapeList.add(lastShape);
 //        }
-        shapeListDrawer(shapeList);
+        shapeListDrawer(shapeList,selectedShapeList);
     }
 
     public void redoShape(){
@@ -75,7 +81,7 @@ public class ShapeList {
             if(lastShape.undoPerformered==true){
                 lastShape.redoMove();
                 lastShape.undoPerformered=false;
-                shapeListDrawer(shapeList);
+                shapeListDrawer(shapeList,selectedShapeList);
             }
         }
         else{
@@ -87,24 +93,24 @@ public class ShapeList {
 //        System.out.println("AddDeletedShapes called");
         Shape dShape = deletedShapeList.get(deletedShapeList.size()-1);
         System.out.println("Adding shape: " + dShape);
-        Shape d = deletedShapeList.pop();
-        shapeList.push(d);
-        shapeListDrawer(shapeList);
+        Shape d = deletedShapeList.remove(deletedShapeList.size()-1);
+        shapeList.add(d);
+        shapeListDrawer(shapeList,selectedShapeList);
     }
 
-    public Stack<Shape> getShapeList() {
+    public ArrayList<Shape> getShapeList() {
         return shapeList;
     }
 
-    public Stack<Shape> getSelectedShapeList(){
+    public ArrayList<Shape> getSelectedShapeList(){
         return selectedShapeList;
     }
 
-    public Stack<Shape> getDeletedShapeList(){
+    public ArrayList<Shape> getDeletedShapeList(){
         return deletedShapeList;
     }
 
-    public Stack<Shape> getCopiedShapeList() { return copiedShapeList;}
+    public ArrayList<Shape> getCopiedShapeList() { return copiedShapeList;}
 
 
 }

@@ -17,19 +17,19 @@ public class ShapeDecorator {
     }
 
     public void outlineShape(Shape s){
-        System.out.println("Outline shape called!");
+//        System.out.println("Outline shape called!");
 
         Graphics2D g = paintCanvas.getGraphics2D();
         Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1, new float[]{9}, 0);
         g.setStroke(stroke);
         g.setColor(Color.BLACK);
         if(s.getShapeType()==ShapeType.RECTANGLE){
-            g.drawRect(s.getStartPoint().x, s.getStartPoint().y, s.getWidth(), s.getHeight());
-            System.out.println("ShapeType: " + s.getShapeType());
+            g.drawRect(s.getStartPoint().x-5, s.getStartPoint().y-5, s.getWidth()+10, s.getHeight()+10);
+//            System.out.println("ShapeType: " + s.getShapeType());
         }
         else if(s.getShapeType()==ShapeType.ELLIPSE){
-            g.drawOval(s.getStartPoint().x, s.getStartPoint().y, s.getWidth(), s.getHeight());
-            System.out.println("ShapeType: " + s.getShapeType());
+            g.drawOval(s.getStartPoint().x-5, s.getStartPoint().y-5, s.getWidth()+10, s.getHeight()+10);
+//            System.out.println("ShapeType: " + s.getShapeType());
         }
         else if(s.getShapeType()==ShapeType.TRIANGLE){
 
@@ -48,7 +48,7 @@ public class ShapeDecorator {
             endArray[2] = (int)newPoint.getY();
 
             g.drawPolygon(startArray,endArray,3);
-            System.out.println("ShapeType: " + s.getShapeType());
+//            System.out.println("ShapeType: " + s.getShapeType());
         }
 
     }

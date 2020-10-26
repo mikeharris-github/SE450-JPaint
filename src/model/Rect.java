@@ -9,10 +9,12 @@ final class Rect implements IShape {
 
     private final Point startPoint;
     private final Point endPoint;
+    boolean shapeSelected;
 
-    Rect(Point startPoint, Point endPoint) {
+    Rect(Point startPoint, Point endPoint, boolean shapeSelected) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
+        this.shapeSelected = shapeSelected;
     }
 
     @Override
@@ -32,6 +34,7 @@ final class Rect implements IShape {
         g.fillRect(startX,startY,width, height);
 //        System.out.println("final test: " + (int)startX + ", " + (int)startY);
 //        System.out.println("final test: " + (int)endX + ", " + (int)endY);
+
     }
 
     @Override

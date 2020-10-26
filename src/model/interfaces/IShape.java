@@ -10,4 +10,5 @@ public interface IShape {
     Point getStartPoint();
 
     Point getEndPoint();
+
 }

@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.Point;
 
 
-public class CreateShape implements ICommand, IUndoable {
+public class CreateShape implements ICommand, IUndoable{
 
     private ShapeType shapeType;
     ApplicationState appState;
@@ -18,8 +18,6 @@ public class CreateShape implements ICommand, IUndoable {
     Color pColor;
     Color sColor;
     private ShapeShadingType shapeShadingType;
-
-
 
     public CreateShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, Color pColor, Color sColor, ShapeShadingType shapeShadingType, ShapeType shapeType){
         this.startPoint = startPoint;
@@ -33,7 +31,6 @@ public class CreateShape implements ICommand, IUndoable {
     }
 
     public void run() {
-
         Shape shape = new Shape(startPoint,endPoint,appState,pColor,sColor,shapeShadingType,shapeType);
         shapeList.addShape(shape);
         CommandHistory.add(this);
@@ -50,16 +47,3 @@ public class CreateShape implements ICommand, IUndoable {
         shapeList.redoShape();
     }
 }
-
-
-//        System.out.println("Start Points for x: " + this.startPoint.getX() + ", " + this.startPoint.getY());
-//draw rect
-//        Rect rect = new Rect(startPoint,endPoint);
-//draw triangle
-//        Tri tri = new Tri(startPoint,endPoint);
-//        shapeList.addShape(tri);
-//        Ellip ellip = new Ellip(startPoint,endPoint,appState,pColor,sColor,shapeShadingType);}
-
-//        if(shapeType==ShapeType.RECTANGLE){ Rect rect = new Rect(startPoint,endPoint,appState,pColor,sColor,shapeShadingType); }
-//        else if(shapeType==ShapeType.TRIANGLE) {Tri tri = new Tri(startPoint,endPoint,appState,pColor,sColor,shapeShadingType);}
-//        else{Ellip ellip = new Ellip(startPoint,endPoint,appState,pColor,sColor,shapeShadingType);}

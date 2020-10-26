@@ -62,7 +62,7 @@ public class MouseHandler extends MouseAdapter {
             selectShapeCommand.run();
         }
         else {
-            System.out.println("MouseMode in Move");
+//            System.out.println("MouseMode in Move");
             ICommand moveShapeCommand = new MoveShape(appState, startPoint, endPoint, shapeList);
             moveShapeCommand.run();
         }

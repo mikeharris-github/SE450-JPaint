@@ -29,7 +29,7 @@ final class TriStrategy implements IShape {
 
         Point newPoint = new Point(startPoint.x, endPoint.y);
 
-        System.out.println("startPoint.x = " + startPoint.x);
+//        System.out.println("startPoint.x = " + startPoint.x);
         int startArray[] = new int[3];
         int endArray[] = new int[3];
 
@@ -54,10 +54,6 @@ final class TriStrategy implements IShape {
             g.setColor(pColor);
             g.fillPolygon(startArray,endArray,3);
         }
-
-
-
-//        g.fillPolygon(startArray,endArray,3);
 
     }
 

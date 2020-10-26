@@ -4,6 +4,7 @@ import jdk.swing.interop.SwingInterOpUtils;
 import model.interfaces.ICommand;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class PasteCommand implements ICommand {
@@ -22,7 +23,7 @@ public class PasteCommand implements ICommand {
         //createShapeCommand
         System.out.println("Paste Command called");
 
-        Stack<Shape> copiedShapeList = shapeList.getCopiedShapeList();
+        ArrayList<Shape> copiedShapeList = shapeList.getCopiedShapeList();
 
         for(Shape s: copiedShapeList){
             //create shape

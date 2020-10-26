@@ -35,10 +35,9 @@ public class MoveShape implements ICommand, IUndoable {
         }
         else if (shapeList.getSelectedShapeList().size()!=0){
             for(Shape s : shapeList.getSelectedShapeList()){
-                shapeList.removeShape();
+                s.move(deltaX,deltaY);
             }
-            shapeList.shapeListDrawer(shapeList.getShapeList());
-            System.out.println("Shape deleted!");
+            shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
             CommandHistory.add(this);
         }
 
@@ -47,21 +46,23 @@ public class MoveShape implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-//        System.out.println("UNDO called");
+        System.out.println("UNDO called");
         shapeList.getSelectedShapeList();
         for(Shape s: shapeList.getSelectedShapeList()){
             s.undoMove();
         }
-        shapeList.shapeListDrawer(shapeList.getShapeList());
+        shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
+//        CommandHistory.add(this);
     }
 
     @Override
     public void redo() {
-//        System.out.println("Redo Called");
+        System.out.println("Redo Called");
         shapeList.getSelectedShapeList();
         for(Shape s: shapeList.getSelectedShapeList()){
             s.redoMove();
         }
-        shapeList.shapeListDrawer(shapeList.getShapeList());
+        shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
+//        CommandHistory.add(this);
     }
 }
