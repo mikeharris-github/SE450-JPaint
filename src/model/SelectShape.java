@@ -36,7 +36,7 @@ public class SelectShape implements ICommand{
         //clear selectedShapeList
         mySelectedShapeList.clear();
 
-        Graphics2D g = paintCanvas.getGraphics2D();
+//        Graphics2D g = paintCanvas.getGraphics2D();
 
 
         int mouseStartX = (int)Math.min(this.startPoint.getX(), this.endPoint.getX());

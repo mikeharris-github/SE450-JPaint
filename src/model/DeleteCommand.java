@@ -3,6 +3,7 @@ package model;
 import model.interfaces.ICommand;
 import model.interfaces.IUndoable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 
@@ -12,7 +13,9 @@ public class DeleteCommand implements ICommand, IUndoable {
 
 
     public DeleteCommand(ShapeList shapeList){
+
         this.shapeList = shapeList;
+        ArrayList<Shape> myDeletedShapeList = shapeList.getDeletedShapeList();
     }
 
     @Override
@@ -25,11 +28,12 @@ public class DeleteCommand implements ICommand, IUndoable {
             System.out.println("The SelectShapeList is empty! Nothing to delete");
         }
         else if (mySelectedShapeList.size()!=0){
-//            for(Shape s:)
+            for(Shape s: mySelectedShapeList){
+                System.out.println("Removing shape: " + s);
+                shapeList.removeSpecificShape(s);
+            }
             mySelectedShapeList.clear();
-            System.out.println("My Selected Shape List count: " + mySelectedShapeList.size());
             shapeList.shapeListDrawer(myShapeList,mySelectedShapeList);
-            System.out.println("Shape deleted!");
             CommandHistory.add(this);
         }
 
@@ -37,12 +41,10 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        shapeList.getSelectedShapeList();
-        for(Shape s: shapeList.getSelectedShapeList()){
-            shapeList.addDeletedShapes();
-        }
-        shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
-        CommandHistory.add(this);
+        shapeList.addDeletedShapes();
+
+//        shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
+//        CommandHistory.add(this);
     }
 
     @Override

@@ -71,6 +71,18 @@ public class ShapeList {
         shapeListDrawer(shapeList,selectedShapeList);
     }
 
+    public void removeSpecificShape(Shape s){
+        if(shapeList.size() == 0) {
+            System.out.println("There's nothing in the list to remove!");
+            return;
+        }
+        //get last shape in Shape List
+        shapeList.remove(s);
+        deletedShapeList.add(s);
+//        }
+        shapeListDrawer(shapeList,selectedShapeList);
+    }
+
     public void redoShape(){
         if(deletedShapeList.size() == 0 && shapeList.size()== 0) {
             System.out.println("There's nothing to redo!");
@@ -89,13 +101,26 @@ public class ShapeList {
         }
     }
 
+
+
     public void addDeletedShapes(){
 //        System.out.println("AddDeletedShapes called");
         Shape dShape = deletedShapeList.get(deletedShapeList.size()-1);
         System.out.println("Adding shape: " + dShape);
         Shape d = deletedShapeList.remove(deletedShapeList.size()-1);
         shapeList.add(d);
+        if(deletedShapeList.size()!=0){
+            addDeletedShapes();
+        }
         shapeListDrawer(shapeList,selectedShapeList);
+    }
+
+    public void addSpecificDeletedShape(Shape s){
+        shapeList.add(s);
+    }
+
+    public void deleteSpecificShape(Shape s){
+        shapeList.remove(s);
     }
 
     public ArrayList<Shape> getShapeList() {

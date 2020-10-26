@@ -21,7 +21,6 @@ class CommandHistory {
 			redoStack.push(c);
 			c.undo();
 		}
-//		System.out.println("CommandHistory.undo finished!");
 
 		return result;
 	}
