@@ -1,22 +1,21 @@
 package model;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 
-import java.awt.Point;
-
 public class MoveShape implements ICommand, IUndoable {
 
-    private java.awt.Point startPoint;
-    private java.awt.Point endPoint;
+    private Point startPoint;
+    private Point endPoint;
     private ShapeList shapeList;
     ApplicationState appState;
 
     private int deltaX;
     private int deltaY;
 
-    public MoveShape(ApplicationState appState, java.awt.Point startPoint, Point endPoint, ShapeList shapeList){
+    public MoveShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.shapeList = shapeList;
@@ -34,8 +33,8 @@ public class MoveShape implements ICommand, IUndoable {
             System.out.println("The SelectShapeList is empty!");
         }
         else if (shapeList.getSelectedShapeList().size()!=0){
-            for(Shape s : shapeList.getSelectedShapeList()){
-                s.move(deltaX,deltaY);
+            for(IShape s : shapeList.getSelectedShapeList()){
+                s.getShape().move(deltaX,deltaY);
             }
             shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
             CommandHistory.add(this);
@@ -48,8 +47,8 @@ public class MoveShape implements ICommand, IUndoable {
     public void undo() {
         System.out.println("UNDO called");
         shapeList.getSelectedShapeList();
-        for(Shape s: shapeList.getSelectedShapeList()){
-            s.undoMove();
+        for(IShape s: shapeList.getSelectedShapeList()){
+            s.getShape().undoMove();
         }
         shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
 //        CommandHistory.add(this);
@@ -59,8 +58,8 @@ public class MoveShape implements ICommand, IUndoable {
     public void redo() {
         System.out.println("Redo Called");
         shapeList.getSelectedShapeList();
-        for(Shape s: shapeList.getSelectedShapeList()){
-            s.redoMove();
+        for(IShape s: shapeList.getSelectedShapeList()){
+            s.getShape().redoMove();
         }
         shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
 //        CommandHistory.add(this);

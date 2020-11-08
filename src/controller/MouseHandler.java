@@ -6,10 +6,10 @@ import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
-import java.awt.Point;
+//import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-//import model.Point;
+import model.Point;
 
 public class MouseHandler extends MouseAdapter {
 

@@ -1,11 +1,10 @@
 package model;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class PasteCommand implements ICommand {
 
@@ -23,19 +22,19 @@ public class PasteCommand implements ICommand {
         //createShapeCommand
         System.out.println("Paste Command called");
 
-        ArrayList<Shape> copiedShapeList = shapeList.getCopiedShapeList();
+        ArrayList<IShape> copiedShapeList = shapeList.getCopiedShapeList();
 
-        for(Shape s: copiedShapeList){
+        for(IShape s: copiedShapeList){
             //create shape
             System.out.println("S1 startpoint: " + s.getStartPoint() + ", endPoint: " + s.getEndPoint());
-            int x1 = s.getStartPoint().x - 100;
-            int y1 = s.getStartPoint().y - 100;
-            int x2 = s.getEndPoint().x -100;
-            int y2 = s.getEndPoint().y - 100;
-            java.awt.Point s2sPoint = new java.awt.Point(x1,y1);
-            java.awt.Point s2ePoint = new java.awt.Point(x2,y2);
+            int x1 = s.getShape().getStartPoint().x - 100;
+            int y1 = s.getShape().getStartPoint().y - 100;
+            int x2 = s.getShape().getEndPoint().x -100;
+            int y2 = s.getShape().getEndPoint().y - 100;
+            Point s2sPoint = new Point(x1,y1);
+            Point s2ePoint = new Point(x2,y2);
 
-            Shape s2 = new Shape(s2sPoint, s2ePoint, s.appState, s.getpColor(), s.getsColor(), s.getShadingType(), s.getShapeType());
+            Shape s2 = new Shape(s2sPoint, s2ePoint, s.getShape().appState, s.getShape().getpColor(), s.getShape().getsColor(), s.getShape().getShadingType(), s.getShape().getShapeType());
 
 
             System.out.println("S2 startPoint: " + s2.getStartPoint() + ", endPoint: " + s2.getEndPoint());

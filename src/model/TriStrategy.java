@@ -4,54 +4,57 @@ import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 
 import java.awt.*;
-import java.awt.Point;
+//import java.awt.Point;
+import model.Point;
 
 final class TriStrategy implements IShape {
 
-    private final Point startPoint;
-    private final Point endPoint;
-    private final Color pColor;
-    private final Color sColor;
-    private final ShapeShadingType shadingType;
+//    private final Point startPoint;
+//    private final Point endPoint;
+//    private final Color pColor;
+//    private final Color sColor;
+//    private final ShapeShadingType shadingType;
     ApplicationState appState;
+    Shape shape;
 
-    TriStrategy(Point startPoint, Point endPoint, ApplicationState appState, Color pColor, Color sColor, ShapeShadingType shadingType) {
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.appState = appState;
-        this.pColor = pColor;
-        this.sColor = sColor;
-        this.shadingType = shadingType;
+    TriStrategy(Shape shape) {
+        this.shape = shape;
+//        this.startPoint = startPoint;
+//        this.endPoint = endPoint;
+//        this.appState = appState;
+//        this.pColor = pColor;
+//        this.sColor = sColor;
+//        this.shadingType = shadingType;
     }
 
     @Override
     public void draw(Graphics2D g) {
 
-        Point newPoint = new Point(startPoint.x, endPoint.y);
+        Point newPoint = new Point(shape.startPoint.x, shape.endPoint.y);
 
 //        System.out.println("startPoint.x = " + startPoint.x);
         int startArray[] = new int[3];
         int endArray[] = new int[3];
 
-        startArray[0] = (int)startPoint.getX();
-        startArray[1] = (int)endPoint.getX();
+        startArray[0] = (int)shape.startPoint.getX();
+        startArray[1] = (int)shape.endPoint.getX();
         startArray[2] = (int)newPoint.getX();
 
-        endArray[0] = (int)startPoint.getY();
-        endArray[1] = (int)endPoint.getY();
+        endArray[0] = (int)shape.startPoint.getY();
+        endArray[1] = (int)shape.endPoint.getY();
         endArray[2] = (int)newPoint.getY();
 
-        g.setColor(pColor);
-        if(shadingType == ShapeShadingType.FILLED_IN) {
+        g.setColor(shape.pColor);
+        if(shape.shadingType == ShapeShadingType.FILLED_IN) {
             g.fillPolygon(startArray,endArray,3);
         }
-        else if (shadingType == ShapeShadingType.OUTLINE){
+        else if (shape.shadingType == ShapeShadingType.OUTLINE){
             g.drawPolygon(startArray,endArray,3);
         }
         else{
-            g.setColor(sColor);
+            g.setColor(shape.sColor);
             g.drawPolygon(startArray,endArray,3);
-            g.setColor(pColor);
+            g.setColor(shape.pColor);
             g.fillPolygon(startArray,endArray,3);
         }
 
@@ -66,5 +69,16 @@ final class TriStrategy implements IShape {
     public model.Point getEndPoint() {
         return null;
     }
+
+    @Override
+    public Shape getShape() {
+        return shape;
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
+    }
+
 
 }

@@ -1,11 +1,10 @@
 package model;
 
 import model.interfaces.ICommand;
-import model.interfaces.IUndoable;
+import model.interfaces.IShape;
 import model.persistence.ApplicationState;
 
-import java.awt.*;
-import java.awt.Point;
+//import java.awt.Point;
 import java.util.ArrayList;
 
 import view.interfaces.PaintCanvasBase;
@@ -18,7 +17,7 @@ public class SelectShape implements ICommand{
     private ShapeList shapeList;
     ApplicationState appState;
 
-    public SelectShape(ApplicationState appState, java.awt.Point startPoint, Point endPoint, ShapeList shapeList, PaintCanvasBase paintCanvas){
+    public SelectShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, PaintCanvasBase paintCanvas){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.shapeList = shapeList;
@@ -30,8 +29,8 @@ public class SelectShape implements ICommand{
     public void run() {
 //        ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
         //iterate over each shape in shapelist. if the shape intersects with the invisbile rectangle, add it to selectedShapeList that would exist between start/end points (11:30)
-        ArrayList<Shape> myShapeList = shapeList.getShapeList();
-        ArrayList<Shape> mySelectedShapeList = shapeList.getSelectedShapeList();
+        ArrayList<IShape> myShapeList = shapeList.getShapeList();
+        ArrayList<IShape> mySelectedShapeList = shapeList.getSelectedShapeList();
 
         //clear selectedShapeList
         mySelectedShapeList.clear();
@@ -46,21 +45,33 @@ public class SelectShape implements ICommand{
         int width = (int)mouseEndX - (int)mouseStartX;
         int height = (int)mouseEndY - (int)mouseStartY;
 
-        for(Shape s: myShapeList){
-            s.getStartPoint();
-            s.getEndPoint();
+        for(IShape s: myShapeList){
+//            s.getShape().getStartPoint();
+//            s.getShape().getEndPoint();
+            System.out.println("Shape: " + s);
 
-            int shapeStartX = (int)Math.min(s.getStartPoint().getX(), s.getEndPoint().getX());
-            int shapeEndX = (int)Math.max(s.getStartPoint().getX(), s.getEndPoint().getX());
-            int shapeStartY = (int)Math.min(this.startPoint.getY(), s.getEndPoint().getY());
-            int shapeEndY = (int)Math.max(this.startPoint.getY(), s.getEndPoint().getY());
+            int shapeStartX = (int)Math.min(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());
+            int shapeEndX = (int)Math.max(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());
+            int shapeStartY = (int)Math.min(s.getShape().getStartPoint().getY(), s.getShape().getEndPoint().getY());
+            int shapeEndY = (int)Math.max(s.getShape().getStartPoint().getY(), s.getShape().getEndPoint().getY());
 
             int shapeWidth = (int)shapeEndX - (int)shapeStartX;
             int shapeHeight = (int)shapeEndY - (int)shapeStartY;
 
-            if(shapeStartX + shapeWidth > mouseStartX && shapeStartY + shapeHeight > mouseStartY && mouseStartX + width > shapeStartX && mouseStartY + height > shapeStartY)
+            if(shapeStartX + shapeWidth > mouseStartX
+                    && shapeStartY + shapeHeight > mouseStartY
+                    && mouseStartX + width > shapeStartX
+                    && mouseStartY + height > shapeStartY)
             {
                 //if shape is selected
+                System.out.println("shapeStartX: " + shapeStartX);
+                System.out.println("shapeWidth: " + shapeWidth);
+                System.out.println("mouseStartX: " + mouseStartX);
+                System.out.println("shapeStartY: " + shapeStartY);
+                System.out.println("shapeHeight: " + shapeHeight);
+                System.out.println("mouseStartY: " + mouseStartY);
+                System.out.println("width: " + width);
+                System.out.println("height: " + height);
                 System.out.println("Shape " + s + " is selected!");
                 //added to shape list
                 mySelectedShapeList.add(s);

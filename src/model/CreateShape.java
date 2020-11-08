@@ -1,11 +1,12 @@
 package model;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 
 import java.awt.*;
-import java.awt.Point;
+//import java.awt.Point;
 
 
 public class CreateShape implements ICommand, IUndoable{
@@ -18,6 +19,8 @@ public class CreateShape implements ICommand, IUndoable{
     Color pColor;
     Color sColor;
     private ShapeShadingType shapeShadingType;
+    public IShape iShape;
+//    private Shape shape;
 
     public CreateShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, Color pColor, Color sColor, ShapeShadingType shapeShadingType, ShapeType shapeType){
         this.startPoint = startPoint;
@@ -32,7 +35,9 @@ public class CreateShape implements ICommand, IUndoable{
 
     public void run() {
         Shape shape = new Shape(startPoint,endPoint,appState,pColor,sColor,shapeShadingType,shapeType);
-        shapeList.addShape(shape);
+        ShapeFactory shapeFactory = new ShapeFactory();
+        iShape = shapeFactory.makeShape(shape);
+        shapeList.addShape(iShape);
         CommandHistory.add(this);
     }
 

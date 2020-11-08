@@ -1,9 +1,9 @@
 package model;
 
 import model.interfaces.ICommand;
+import model.interfaces.IShape;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 public class CopyCommand implements ICommand {
 
@@ -16,9 +16,9 @@ public class CopyCommand implements ICommand {
     public void run() {
         System.out.println("Copy Command called");
         //iterate over the selectedShapeList, where the selectedShapeList iterated over the mainShapeList
-        ArrayList<Shape> selectedShapeList = shapeList.getSelectedShapeList();
+        ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
 
-        for(Shape s: selectedShapeList){
+        for(IShape s: selectedShapeList){
             shapeList.getCopiedShapeList().add(s);
             System.out.println("Shape " + s + " copied!");
         }
