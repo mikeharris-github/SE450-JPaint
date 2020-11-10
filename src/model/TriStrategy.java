@@ -16,6 +16,7 @@ final class TriStrategy implements IShape {
 //    private final ShapeShadingType shadingType;
     ApplicationState appState;
     Shape shape;
+    boolean isSelected;
 
     TriStrategy(Shape shape) {
         this.shape = shape;
@@ -76,9 +77,20 @@ final class TriStrategy implements IShape {
     }
 
     @Override
+    public ShapeGroup getGroup() {
+        return null;
+    }
+
+    @Override
     public int getSize() {
         return 0;
     }
+
+    @Override
+    public void drawChildren(Graphics2D g) {
+
+    }
+
 
 
 }

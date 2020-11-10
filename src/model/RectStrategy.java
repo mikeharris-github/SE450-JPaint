@@ -60,14 +60,6 @@ final class RectStrategy implements IShape {
             g.setColor(shape.pColor);
             g.fillRect(startX, startY, width, height);
         }
-
-
-//            g.setColor(Color.green);
-//        g.fillRect(startX,startY,width, height);
-//        System.out.println("final test: " + (int)startX + ", " + (int)startY);
-//        System.out.println("final test: " + (int)endX + ", " + (int)endY);
-
-
     }
 
     @Override
@@ -86,8 +78,18 @@ final class RectStrategy implements IShape {
     }
 
     @Override
+    public ShapeGroup getGroup() {
+        return null;
+    }
+
+    @Override
     public int getSize() {
         return 0;
+    }
+
+    @Override
+    public void drawChildren(Graphics2D g) {
+
     }
 
 

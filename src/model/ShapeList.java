@@ -45,11 +45,18 @@ public class ShapeList {
             s.draw(g);
             if(s.getSize()>0){
                 System.out.println("OH YAS THIS IS GROUP");
+                s.drawChildren(g);
             }
         }
         for (IShape z: selectedShapeList){
             ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
-            shapeDecorator.outlineShape(z);
+            if(z.getSize()>0){
+                System.out.println("BRO HOW DO I OUTLINE THIS");
+                shapeDecorator.outlineGroup(z);
+            }
+            else {
+                shapeDecorator.outlineShape(z);
+            }
         }
 //        CommandHistory.add(this);
     }

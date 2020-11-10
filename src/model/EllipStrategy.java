@@ -71,9 +71,20 @@ final class EllipStrategy implements IShape, ICommand {
     }
 
     @Override
+    public ShapeGroup getGroup() {
+        return null;
+    }
+
+    @Override
     public int getSize() {
         return 0;
     }
+
+    @Override
+    public void drawChildren(Graphics2D g) {
+
+    }
+
 
     @Override
     public void run() {

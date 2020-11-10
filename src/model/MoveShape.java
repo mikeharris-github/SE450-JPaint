@@ -32,9 +32,15 @@ public class MoveShape implements ICommand, IUndoable {
         if(shapeList.getSelectedShapeList().size()==0) {
             System.out.println("The SelectShapeList is empty!");
         }
-        else if (shapeList.getSelectedShapeList().size()!=0){
+        else if (shapeList.getSelectedShapeList().size()>0){
             for(IShape s : shapeList.getSelectedShapeList()){
-                s.getShape().move(deltaX,deltaY);
+                if(s.getSize()>0){
+                    System.out.println("Holy cow! i think this is a group!");
+
+                }
+                else{
+                    s.getShape().move(deltaX,deltaY);
+                }
             }
             shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
             CommandHistory.add(this);
