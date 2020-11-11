@@ -2,14 +2,16 @@ package model;
 
 import model.interfaces.ICommand;
 import model.interfaces.IShape;
+import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
 
 //import java.awt.Point;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import view.interfaces.PaintCanvasBase;
 
-public class SelectShape implements ICommand{
+public class SelectCommand implements ICommand, IUndoable {
 
     PaintCanvasBase paintCanvas;
     private Point startPoint;
@@ -17,7 +19,7 @@ public class SelectShape implements ICommand{
     private ShapeList shapeList;
     ApplicationState appState;
 
-    public SelectShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, PaintCanvasBase paintCanvas){
+    public SelectCommand(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, PaintCanvasBase paintCanvas){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.shapeList = shapeList;
@@ -58,14 +60,7 @@ public class SelectShape implements ICommand{
             System.out.println("Shape: " + s);
 
             if (s.getSize() > 0) {
-                System.out.println("YO MAN YOOOO");
-//                int shapeStartX = (int) Math.min(s.getGroup().getStartPoint().getX(), s.getGroup().getEndPoint().getX());
-//                int shapeEndX = (int) Math.max(s.getGroup().getStartPoint().getX(), s.getGroup().getEndPoint().getX());
-//                int shapeStartY = (int) Math.min(s.getGroup().getStartPoint().getY(), s.getGroup().getEndPoint().getY());
-//                int shapeEndY = (int) Math.max(s.getGroup().getStartPoint().getY(), s.getGroup().getEndPoint().getY());
-
-//                int groupWidth = (int) shapeEndX - (int) shapeStartX;
-//                int groupHeight = (int) shapeEndY - (int) shapeStartY;
+//                System.out.println("THIS ISHAPE IS A GROUP!");
                 int groupWidth = s.getGroup().getMaxXY().x - (int) s.getGroup().getMinXY().x;
                 int groupHeight = s.getGroup().getMaxXY().x - (int) s.getGroup().getMinXY().x;
 
@@ -73,22 +68,17 @@ public class SelectShape implements ICommand{
                         && s.getGroup().getMinXY().y + groupHeight > mouseStartY
                         && mouseStartX + width > s.getGroup().getMinXY().x
                         && mouseStartY + height > s.getGroup().getMinXY().y) {
-                    //if shape is selected
-                    System.out.println("groupStartX: " + s.getGroup().getMinXY().x);
-                    System.out.println("groupWidth: " + groupWidth);
-                    System.out.println("mouseStartX: " + mouseStartX);
-                    System.out.println("groupStartY: " + s.getGroup().getMinXY().y);
-                    System.out.println("groupHeight: " + groupHeight);
-                    System.out.println("mouseStartY: " + mouseStartY);
-                    System.out.println("width: " + width);
-                    System.out.println("height: " + height);
-                    System.out.println("Group " + s + " is selected!");
                     //added to shape list
                     s.getGroup().groupSelected=true;
                     mySelectedShapeList.add(s);
 //                shapeDecorator.outlineShape(s);
 
-            }} else {
+            }
+            }
+            else{
+                System.out.println("Current ShapeList size: " + myShapeList.size());
+                System.out.println("current shape: " + s);
+                System.out.println("current shapegroup children number: " + s.getSize());
 
                 int shapeStartX = (int) Math.min(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());
                 int shapeEndX = (int) Math.max(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());
@@ -103,14 +93,14 @@ public class SelectShape implements ICommand{
                         && mouseStartX + width > shapeStartX
                         && mouseStartY + height > shapeStartY) {
                     //if shape is selected
-                    System.out.println("shapeStartX: " + shapeStartX);
-                    System.out.println("shapeWidth: " + shapeWidth);
-                    System.out.println("mouseStartX: " + mouseStartX);
-                    System.out.println("shapeStartY: " + shapeStartY);
-                    System.out.println("shapeHeight: " + shapeHeight);
-                    System.out.println("mouseStartY: " + mouseStartY);
-                    System.out.println("width: " + width);
-                    System.out.println("height: " + height);
+//                    System.out.println("shapeStartX: " + shapeStartX);
+//                    System.out.println("shapeWidth: " + shapeWidth);
+//                    System.out.println("mouseStartX: " + mouseStartX);
+//                    System.out.println("shapeStartY: " + shapeStartY);
+//                    System.out.println("shapeHeight: " + shapeHeight);
+//                    System.out.println("mouseStartY: " + mouseStartY);
+//                    System.out.println("width: " + width);
+//                    System.out.println("height: " + height);
                     System.out.println("Shape " + s + " is selected!");
                     //added to shape list
                     s.getShape().shapeSelected();
@@ -120,8 +110,36 @@ public class SelectShape implements ICommand{
 //            }
             }
             shapeList.shapeListDrawer(myShapeList, mySelectedShapeList);
-            System.out.println("Numher of selected shapes: " + mySelectedShapeList.size());
+//            System.out.println("Numher of selected shapes: " + mySelectedShapeList.size());
+            CommandHistory.add(this);
 
         }
+    }
+
+    @Override
+    public void undo() {
+        ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
+        ArrayList<IShape> deselectedShapeList = shapeList.deselectedShapeList;
+        for(IShape d: selectedShapeList){
+            deselectedShapeList.add(d);
+            d.getShape().shapeSelected=false;
+        }
+        selectedShapeList.clear();
+        System.out.println("undoSelect done!");
+        shapeList.shapeListDrawer(shapeList.getShapeList(),selectedShapeList);
+    }
+
+    @Override
+    public void redo() {
+        ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
+        ArrayList<IShape> deselectedShapeList = shapeList.deselectedShapeList;
+        for(IShape d: deselectedShapeList){
+            selectedShapeList.add(d);
+            d.getShape().shapeSelected=true;
+        }
+        deselectedShapeList.clear();
+        System.out.println("redoSelect done!");
+        shapeList.shapeListDrawer(shapeList.getShapeList(),selectedShapeList);
+
     }
 }

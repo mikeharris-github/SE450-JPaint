@@ -22,21 +22,21 @@ public class MoveShape implements ICommand, IUndoable {
         this.appState = appState;
 
         //determine delta
-        deltaX = (int)endPoint.getX()-(int)startPoint.getX();
-        deltaY = (int)endPoint.getY()-(int)startPoint.getY();
+        deltaX = endPoint.getX()-startPoint.getX();
+        deltaY = endPoint.getY()-startPoint.getY();
     }
 
     @Override
     public void run() {
         //if ShapeList == NULL, throw an error!
-        if(shapeList.getSelectedShapeList().size()==0) {
+        if(shapeList.getSelectedShapeList().size()<=0) {
             System.out.println("The SelectShapeList is empty!");
         }
         else if (shapeList.getSelectedShapeList().size()>0){
             for(IShape s : shapeList.getSelectedShapeList()){
                 if(s.getSize()>0){
-                    System.out.println("Holy cow! i think this is a group!");
-
+                    System.out.println("you trying to move a group?! that's so COOL!!!");
+                    s.getGroup().moveChildren(deltaX,deltaY);
                 }
                 else{
                     s.getShape().move(deltaX,deltaY);
@@ -45,7 +45,6 @@ public class MoveShape implements ICommand, IUndoable {
             shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
             CommandHistory.add(this);
         }
-
     }
 
 
@@ -54,7 +53,13 @@ public class MoveShape implements ICommand, IUndoable {
         System.out.println("UNDO called");
         shapeList.getSelectedShapeList();
         for(IShape s: shapeList.getSelectedShapeList()){
-            s.getShape().undoMove();
+            if(s.getSize()>0){
+                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
+                s.getGroup().undoMoveChildren();
+            }
+            else{
+                s.getShape().undoMove();
+            }
         }
         shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
 //        CommandHistory.add(this);
@@ -65,7 +70,13 @@ public class MoveShape implements ICommand, IUndoable {
         System.out.println("Redo Called");
         shapeList.getSelectedShapeList();
         for(IShape s: shapeList.getSelectedShapeList()){
-            s.getShape().redoMove();
+            if(s.getSize()>0){
+                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
+                s.getGroup().redoMoveChildren();
+            }
+            else{
+                s.getShape().redoMove();
+            }
         }
         shapeList.shapeListDrawer(shapeList.getShapeList(),shapeList.getSelectedShapeList());
 //        CommandHistory.add(this);

@@ -11,7 +11,6 @@ class CommandHistory {
 	public static void add(IUndoable cmd) {
 		undoStack.push(cmd);
 		redoStack.clear();
-//		System.out.println("CommandHistory.add triggered!");
 	}
 
 	public static boolean undo() {

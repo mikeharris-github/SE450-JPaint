@@ -20,12 +20,6 @@ final class TriStrategy implements IShape {
 
     TriStrategy(Shape shape) {
         this.shape = shape;
-//        this.startPoint = startPoint;
-//        this.endPoint = endPoint;
-//        this.appState = appState;
-//        this.pColor = pColor;
-//        this.sColor = sColor;
-//        this.shadingType = shadingType;
     }
 
     @Override
@@ -91,6 +85,10 @@ final class TriStrategy implements IShape {
 
     }
 
+    @Override
+    public boolean isGroup() {
+        return false;
+    }
 
 
 }

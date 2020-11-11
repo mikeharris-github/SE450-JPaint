@@ -18,9 +18,6 @@ public class ShapeDecorator {
 
     public void outlineGroup(IShape s){
         System.out.println("outlineGroup called!");
-
-//        int shapeWidth = (int)shapeEndX - (int)shapeStartX;
-//        int shapeHeight = (int)shapeEndY - (int)shapeStartY;
         int groupWidth = s.getGroup().getMaxXY().x - s.getGroup().getMinXY().x;
         int groupHeight = s.getGroup().getMaxXY().y - s.getGroup().getMinXY().y;
 
@@ -64,6 +61,9 @@ public class ShapeDecorator {
 
             g.drawPolygon(startArray,endArray,3);
 //            System.out.println("ShapeType: " + s.getShapeType());
+        }
+        else if (s.getShape().shapeSelected == false){
+            System.out.println("this shape ain't selected!");
         }
 
     }

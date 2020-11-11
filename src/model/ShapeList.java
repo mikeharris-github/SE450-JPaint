@@ -10,15 +10,13 @@ import view.interfaces.PaintCanvasBase;
 
 public class ShapeList {
 
-//    public static Stack<Shape> shapeList = new Stack<>();
-//    public static Stack<Shape> deletedShapeList = new Stack<>();
-//    public static Stack<Shape> selectedShapeList = new Stack<>();
-//    public static Stack<Shape> copiedShapeList = new Stack<>();
-
     public static ArrayList<IShape> shapeList = new ArrayList<>();
     public static ArrayList<IShape> deletedShapeList = new ArrayList<>();
     public static ArrayList<IShape> selectedShapeList = new ArrayList<>();
     public static ArrayList<IShape> copiedShapeList = new ArrayList<>();
+    public static ArrayList<IShape> pasteShapeList = new ArrayList<>();
+    public static ArrayList<IShape> deselectedShapeList = new ArrayList<>();
+    public static ArrayList<IShape> undoRedoList = new ArrayList<>();
 
     private static PaintCanvas paintCanvas;
     public ApplicationState appState;
@@ -44,20 +42,22 @@ public class ShapeList {
         for (IShape s: shapeList){
             s.draw(g);
             if(s.getSize()>0){
-                System.out.println("OH YAS THIS IS GROUP");
+//                System.out.println("Draw Group");
                 s.drawChildren(g);
             }
         }
-        for (IShape z: selectedShapeList){
-            ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
-            if(z.getSize()>0){
-                System.out.println("BRO HOW DO I OUTLINE THIS");
-                shapeDecorator.outlineGroup(z);
-            }
-            else {
-                shapeDecorator.outlineShape(z);
+        if(selectedShapeList.size()>0){
+            for (IShape z: selectedShapeList){
+                ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
+                if(z.getSize()>0){
+                    shapeDecorator.outlineGroup(z);
+                }
+                else {
+                    shapeDecorator.outlineShape(z);
+                }
             }
         }
+
 //        CommandHistory.add(this);
     }
 
@@ -68,9 +68,9 @@ public class ShapeList {
         }
         //get last shape in Shape List
         IShape lastShape = shapeList.get(shapeList.size()-1);
+        lastShape.getShape().shapeSelected=false;
         shapeList.remove(lastShape);
         deletedShapeList.add(lastShape);
-//        }
         shapeListDrawer(shapeList,selectedShapeList);
     }
 
@@ -79,10 +79,11 @@ public class ShapeList {
             System.out.println("There's nothing in the list to remove!");
             return;
         }
+        else{
         //get last shape in Shape List
         shapeList.remove(s);
         deletedShapeList.add(s);
-//        }
+        }
         shapeListDrawer(shapeList,selectedShapeList);
     }
 
@@ -96,6 +97,7 @@ public class ShapeList {
             if(lastShape.getShape().undoPerformered==true){
                 lastShape.getShape().redoMove();
                 lastShape.getShape().undoPerformered=false;
+                lastShape.getShape().shapeSelected();
                 shapeListDrawer(shapeList,selectedShapeList);
             }
         }
@@ -104,27 +106,19 @@ public class ShapeList {
         }
     }
 
-
-
     public void addDeletedShapes(){
-//        System.out.println("AddDeletedShapes called");
+        System.out.println("AddDeletedShapes called");
         IShape dShape = deletedShapeList.get(deletedShapeList.size()-1);
         System.out.println("Adding shape: " + dShape);
         IShape d = deletedShapeList.remove(deletedShapeList.size()-1);
         shapeList.add(d);
+        d.getShape().shapeSelected=true;
 //        if(deletedShapeList.size()!=0){
 //            addDeletedShapes();
 //        }
         shapeListDrawer(shapeList,selectedShapeList);
     }
 
-//    public void addSpecificDeletedShape(Shape s){
-//        shapeList.add(s);
-//    }
-//
-//    public void deleteSpecificShape(Shape s){
-//        shapeList.remove(s);
-//    }
 
     public ArrayList<IShape> getShapeList() {
         return shapeList;
@@ -139,6 +133,10 @@ public class ShapeList {
     }
 
     public ArrayList<IShape> getCopiedShapeList() { return copiedShapeList;}
+
+    public ArrayList<IShape> getPasteShapeList() { return pasteShapeList;}
+
+    public ArrayList<IShape> getUndoRedoList() { return undoRedoList;}
 
 
 }

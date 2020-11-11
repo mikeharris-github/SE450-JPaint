@@ -14,4 +14,5 @@ public interface IShape {
     ShapeGroup getGroup();
     int getSize();
     void drawChildren(Graphics2D g);
+    boolean isGroup();
 }

@@ -11,14 +11,7 @@ import model.Point;
 
 final class EllipStrategy implements IShape, ICommand {
 
-//    private final Point startPoint;
-//    private final Point endPoint;
-//    private final Color pColor;
-//    private final Color sColor;
-//    private final ShapeShadingType shadingType;
     Shape shape;
-    ApplicationState appState;
-//    private ColorTranslate primaryColorTranslate;
 
     EllipStrategy(Shape shape) {
         this.shape = shape;
@@ -27,14 +20,14 @@ final class EllipStrategy implements IShape, ICommand {
     @Override
     public void draw(Graphics2D g) {
 
-        int startX = (int)Math.min(shape.startPoint.getX(), shape.endPoint.getX());
-        int endX = (int)Math.max(shape.startPoint.getX(), shape.endPoint.getX());
-        int startY = (int)Math.min(shape.startPoint.getY(), shape.endPoint.getY());
-        int endY = (int)Math.max(shape.startPoint.getY(), shape.endPoint.getY());
+        int startX = Math.min(shape.startPoint.getX(), shape.endPoint.getX());
+        int endX = Math.max(shape.startPoint.getX(), shape.endPoint.getX());
+        int startY = Math.min(shape.startPoint.getY(), shape.endPoint.getY());
+        int endY = Math.max(shape.startPoint.getY(), shape.endPoint.getY());
 
 
-        int width = (int)endX - (int)startX;
-        int height = (int)endY - (int)startY;
+        int width = endX - startX;
+        int height = endY - startY;
 
         g.setColor(shape.pColor);
         if(shape.shadingType == ShapeShadingType.FILLED_IN){
@@ -85,6 +78,10 @@ final class EllipStrategy implements IShape, ICommand {
 
     }
 
+    @Override
+    public boolean isGroup() {
+        return false;
+    }
 
     @Override
     public void run() {

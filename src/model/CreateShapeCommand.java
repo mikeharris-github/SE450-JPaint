@@ -9,7 +9,7 @@ import java.awt.*;
 //import java.awt.Point;
 
 
-public class CreateShape implements ICommand, IUndoable{
+public class CreateShapeCommand implements ICommand, IUndoable{
 
     private ShapeType shapeType;
     ApplicationState appState;
@@ -21,8 +21,9 @@ public class CreateShape implements ICommand, IUndoable{
     private ShapeShadingType shapeShadingType;
     public IShape iShape;
 //    private Shape shape;
+    boolean pastedShape;
 
-    public CreateShape(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, Color pColor, Color sColor, ShapeShadingType shapeShadingType, ShapeType shapeType){
+    public CreateShapeCommand(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, Color pColor, Color sColor, ShapeShadingType shapeShadingType, ShapeType shapeType){
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.shapeList = shapeList;
@@ -43,9 +44,7 @@ public class CreateShape implements ICommand, IUndoable{
 
 
     @Override
-    public void undo() {
-        shapeList.removeShape();
-    }
+    public void undo() { shapeList.removeShape(); }
 
     @Override
     public void redo() {

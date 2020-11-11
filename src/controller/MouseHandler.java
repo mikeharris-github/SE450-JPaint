@@ -4,9 +4,7 @@ import model.*;
 import model.interfaces.ICommand;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
-
 import java.awt.*;
-//import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import model.Point;
@@ -18,7 +16,6 @@ public class MouseHandler extends MouseAdapter {
     public Point startPoint;
     public Point endPoint;
     public PaintCanvasBase paintCanvas;
-    ICommand command;
 
     public MouseHandler(ApplicationState appState, PaintCanvasBase paintCanvas, ShapeList shapeList){
         this.paintCanvas = paintCanvas;
@@ -31,13 +28,13 @@ public class MouseHandler extends MouseAdapter {
     @Override
     public void mousePressed(MouseEvent e) {
         startPoint = new Point(e.getX(),e.getY());
-        System.out.println("MousePressed: " + (int)startPoint.getX() + ", " + (int)startPoint.getY());
+//        System.out.println("MousePressed: " + startPoint.getX() + ", " + startPoint.getY());
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
         this.endPoint = new Point(e.getX(), e.getY());
-        System.out.println("MouseReleased: " + (int) endPoint.getX() + ", " + (int) endPoint.getY());
+//        System.out.println("MouseReleased: " + endPoint.getX() + ", " + endPoint.getY());
 
         //PrimaryColor
         ColorTranslate primaryColorTranslate = new ColorTranslate(appState.getActivePrimaryColor());
@@ -52,13 +49,13 @@ public class MouseHandler extends MouseAdapter {
 
         //if in draw mode
         if (appState.getActiveMouseMode() == MouseMode.DRAW) {
-            ICommand createShapeCommand = new CreateShape(appState, startPoint, endPoint, shapeList, pColor, sColor, shadingType, shapeType);
+            ICommand createShapeCommand = new CreateShapeCommand(appState, startPoint, endPoint, shapeList, pColor, sColor, shadingType, shapeType);
             createShapeCommand.run();
         }
         //if in select Mode
         else if (appState.getActiveMouseMode() == MouseMode.SELECT){
 //            System.out.println("MouseMode in Select");
-            ICommand selectShapeCommand = new SelectShape(appState, startPoint, endPoint, shapeList, paintCanvas);
+            ICommand selectShapeCommand = new SelectCommand(appState, startPoint, endPoint, shapeList, paintCanvas);
             selectShapeCommand.run();
         }
         else {
