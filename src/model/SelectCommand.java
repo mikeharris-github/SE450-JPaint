@@ -35,7 +35,8 @@ public class SelectCommand implements ICommand, IUndoable {
         ArrayList<IShape> mySelectedShapeList = shapeList.getSelectedShapeList();
 
         for (IShape s : mySelectedShapeList) {
-            if (s.getSize() > 0) {
+//            if (s.getSize() > 0) {
+            if(s.isGroup()==true){
                 s.getGroup().groupSelected = false;
             } else {
                 s.getShape().shapeSelected = false;
@@ -43,6 +44,17 @@ public class SelectCommand implements ICommand, IUndoable {
         }
         //clear selectedShapeList
         mySelectedShapeList.clear();
+
+//        //clear groups with no children
+//        while(myShapeList.size()!=0){
+//
+//        }
+
+//        for(IShape s: myShapeList){
+//            if(s.isGroup()==true && s.getSize()==0){
+//                myShapeList.remove(s);
+//            }
+//        }
 
 //        Graphics2D g = paintCanvas.getGraphics2D();
 
@@ -57,7 +69,7 @@ public class SelectCommand implements ICommand, IUndoable {
         for (IShape s : myShapeList) {
 //            s.getShape().getStartPoint();
 //            s.getShape().getEndPoint();
-            System.out.println("Shape: " + s);
+//            System.out.println("Shape: " + s);
 
             if (s.getSize() > 0) {
 //                System.out.println("THIS ISHAPE IS A GROUP!");
@@ -75,6 +87,7 @@ public class SelectCommand implements ICommand, IUndoable {
 
             }
             }
+
             else{
                 System.out.println("Current ShapeList size: " + myShapeList.size());
                 System.out.println("current shape: " + s);
@@ -101,7 +114,7 @@ public class SelectCommand implements ICommand, IUndoable {
 //                    System.out.println("mouseStartY: " + mouseStartY);
 //                    System.out.println("width: " + width);
 //                    System.out.println("height: " + height);
-                    System.out.println("Shape " + s + " is selected!");
+//                    System.out.println("Shape " + s + " is selected!");
                     //added to shape list
                     s.getShape().shapeSelected();
                     mySelectedShapeList.add(s);

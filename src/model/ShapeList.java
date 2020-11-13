@@ -49,7 +49,7 @@ public class ShapeList {
         if(selectedShapeList.size()>0){
             for (IShape z: selectedShapeList){
                 ShapeDecorator shapeDecorator = new ShapeDecorator(paintCanvas);
-                if(z.getSize()>0){
+                if(z.isGroup()){
                     shapeDecorator.outlineGroup(z);
                 }
                 else {

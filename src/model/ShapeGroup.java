@@ -28,18 +28,11 @@ public class ShapeGroup implements IShape {
     }
 
     public IShape removeChild(int i){
-        System.out.println("REMOVE CHILD INDEX PASSED: " + i);
+//        System.out.println("REMOVE CHILD INDEX PASSED: " + i);
         IShape z = children.remove(i);
-        System.out.println("RETURNING CHILD: " + i);
+//        System.out.println("RETURNING CHILD: " + i);
         return z;
     }
-//
-//    public void removeAllChildren(){
-//        for(IShape s: children){
-//            removeChild(this);
-//            ShapeList.shapeList.add(this);
-//        }
-//    }
 
     public void moveChildren(int deltaX, int deltaY){
         this.deltaX = deltaX;
@@ -51,7 +44,6 @@ public class ShapeGroup implements IShape {
     }
 
     public void undoMoveChildren(){
-        System.out.println("UndoMoveChildren Triggered!");
         for(IShape c : children){
             c.getShape().setStartPoint((c.getShape().getStartPoint().x)-deltaX, (c.getShape().getStartPoint().y)-deltaY);
             c.getShape().setEndPoint((c.getShape().getEndPoint().x)-deltaX, (c.getShape().getEndPoint().y)-deltaY);
@@ -79,17 +71,24 @@ public class ShapeGroup implements IShape {
         int shapeStartX = 9999;
         int shapeStartY = 9999;
         for(IShape child : children){
-            if(child.getShape().getStartPoint().x<shapeStartX){
-//                System.out.println("HOLY TOLEDO!");
-                shapeStartX = child.getShape().getStartPoint().x;
-//                System.out.println("shapeStartX: " + shapeStartX);
-            }
-            if(child.getShape().getStartPoint().y<shapeStartY){
-//                System.out.println("HOLY TOLEDO!");
-                shapeStartY = child.getShape().getStartPoint().y;
-//                System.out.println("shapeStartY: " + shapeStartY);
+            if(child.isGroup()==false){
+                if(child.getShape().getMinXY().x<shapeStartX){
+                    shapeStartX = child.getShape().getMinXY().x;
+                }
+                if(child.getShape().getMinXY().y<shapeStartY){
+                    shapeStartY = child.getShape().getMinXY().y;
 
+                }
             }
+            else{
+                if(child.getGroup().getMinXY().x<shapeStartX){
+                    shapeStartX = child.getGroup().getMinXY().x;
+                }
+                if(child.getGroup().getMinXY().y<shapeStartY){
+                    shapeStartY = child.getGroup().getMinXY().y;
+                }
+            }
+
 
         }
         Point minXY = new Point(shapeStartX,shapeStartY);
@@ -100,16 +99,23 @@ public class ShapeGroup implements IShape {
         int shapeEndX = 0;
         int shapeEndY = 0;
         for(IShape child: children){
-            if(child.getShape().getEndPoint().x>shapeEndX){
-//                System.out.println("HOLY TOLEDO!");
-                shapeEndX = child.getShape().getEndPoint().x;
-//                System.out.println("shapeEndX: " + shapeEndX);
+            if(child.isGroup()==false){
+                if(child.getShape().getMaxXY().x>shapeEndX){
+                    shapeEndX = child.getShape().getMaxXY().x;
+                }
+                if(child.getShape().getMaxXY().y>shapeEndY){
+                    shapeEndY = child.getShape().getMaxXY().y;
+                }
             }
-            if(child.getShape().getEndPoint().y>shapeEndY){
-//                System.out.println("HOLY TOLEDO!");
-                shapeEndY = child.getShape().getEndPoint().y;
-//                System.out.println("shapeEndY: " + shapeEndY);
+            else{
+                if(child.getGroup().getMaxXY().x>shapeEndX){
+                    shapeEndX = child.getGroup().getMaxXY().x;
+                }
+                if(child.getGroup().getMaxXY().y>shapeEndY){
+                    shapeEndY = child.getGroup().getMaxXY().y;
+                }
             }
+
         }
         Point maxXY = new Point(shapeEndX,shapeEndY);
         return maxXY;
@@ -133,10 +139,10 @@ public class ShapeGroup implements IShape {
         return true;
     }
 
-    public boolean groupSelected() {
-        groupSelected = !groupSelected;
-        return groupSelected;
-    }
+//    public boolean groupSelected() {
+//        groupSelected = !groupSelected;
+//        return groupSelected;
+//    }
 
     @Override
     public void draw(Graphics2D g) {

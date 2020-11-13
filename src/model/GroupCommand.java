@@ -48,12 +48,13 @@ public class GroupCommand implements ICommand, IUndoable {
                 }
                 //if current shape is group, add all shapes to new group
                 else if(s.isGroup()==true){
-//                else if(s.getSize()>0){
                     s.getGroup().groupSelected=false;
                     for(IShape z: s.getGroup().getChildren()){
                         shapeGroup.addChild(z);
                         numChildren++;
                     }
+//                    shapeGroup.addChild(s);
+//                    numChildren++;
                 }
                 System.out.println("Removed shape: " + s);
                 System.out.println("Number of shapes in group: " + shapeGroup.getSize());

@@ -18,6 +18,7 @@ public class ShapeDecorator {
 
     public void outlineGroup(IShape s){
         System.out.println("outlineGroup called!");
+        System.out.println("max x: " + s.getGroup().getMaxXY().x);
         int groupWidth = s.getGroup().getMaxXY().x - s.getGroup().getMinXY().x;
         int groupHeight = s.getGroup().getMaxXY().y - s.getGroup().getMinXY().y;
 
@@ -25,7 +26,7 @@ public class ShapeDecorator {
         Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1, new float[]{9}, 0);
         g.setStroke(stroke);
         g.setColor(Color.BLACK);
-        g.drawRect(s.getGroup().getMinXY().x, s.getGroup().getMinXY().y, groupWidth,groupHeight);
+        g.drawRect(s.getGroup().getMinXY().x -5, s.getGroup().getMinXY().y-5, groupWidth+10,groupHeight+10);
     }
 
     public void outlineShape(IShape s){
@@ -36,11 +37,12 @@ public class ShapeDecorator {
         g.setStroke(stroke);
         g.setColor(Color.BLACK);
         if(s.getShape().getShapeType()==ShapeType.RECTANGLE && (s.getShape().shapeSelected == true)){
-            g.drawRect(s.getShape().getStartPoint().x-5, s.getShape().getStartPoint().y-5, s.getShape().getWidth()+10, s.getShape().getHeight()+10);
+            g.drawRect(s.getShape().getMinXY().x-5, s.getShape().getMinXY().y-5, s.getShape().getWidth()+10, s.getShape().getHeight()+10);
+//            g.drawRect(s.getShape().getStartPoint().x-5, s.getShape().getStartPoint().y-5, s.getShape().getWidth()+10, s.getShape().getHeight()+10);
 //            System.out.println("ShapeType: " + s.getShapeType());
         }
         else if(s.getShape().getShapeType()==ShapeType.ELLIPSE && (s.getShape().shapeSelected == true)){
-            g.drawOval(s.getShape().getStartPoint().x-5, s.getShape().getStartPoint().y-5, s.getShape().getWidth()+10, s.getShape().getHeight()+10);
+            g.drawOval(s.getShape().getMinXY().x-5, s.getShape().getMinXY().y-5, s.getShape().getWidth()+10, s.getShape().getHeight()+10);
 //            System.out.println("ShapeType: " + s.getShapeType());
         }
         else if(s.getShape().getShapeType()==ShapeType.TRIANGLE && (s.getShape().shapeSelected == true)){
@@ -51,12 +53,12 @@ public class ShapeDecorator {
             int startArray[] = new int[3];
             int endArray[] = new int[3];
 
-            startArray[0] = (int)s.getShape().getStartPoint().getX()-5;
-            startArray[1] = (int)s.getShape().getEndPoint().getX()-5;
-            startArray[2] = (int)newPoint.getX()-5;
+            startArray[0] = s.getShape().getStartPoint().getX();
+            startArray[1] = s.getShape().getEndPoint().getX();
+            startArray[2] = (int)newPoint.getX();
 
-            endArray[0] = (int)s.getShape().getStartPoint().getY();
-            endArray[1] = (int)s.getShape().getEndPoint().getY();
+            endArray[0] = s.getShape().getStartPoint().getY();
+            endArray[1] = s.getShape().getEndPoint().getY();
             endArray[2] = (int)newPoint.getY();
 
             g.drawPolygon(startArray,endArray,3);
