@@ -109,15 +109,13 @@ public class ShapeList {
     }
 
     public void addDeletedShapes(){
-        System.out.println("AddDeletedShapes called");
+//        System.out.println("AddDeletedShapes called");
         IShape dShape = deletedShapeList.get(deletedShapeList.size()-1);
-        System.out.println("Adding shape: " + dShape);
+//        System.out.println("Adding shape: " + dShape);
         IShape d = deletedShapeList.remove(deletedShapeList.size()-1);
         shapeList.add(d);
         d.getShape().shapeSelected=true;
-//        if(deletedShapeList.size()!=0){
-//            addDeletedShapes();
-//        }
+
         shapeListDrawer(shapeList,selectedShapeList);
     }
 

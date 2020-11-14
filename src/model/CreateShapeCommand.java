@@ -4,9 +4,7 @@ import model.interfaces.ICommand;
 import model.interfaces.IShape;
 import model.interfaces.IUndoable;
 import model.persistence.ApplicationState;
-
 import java.awt.*;
-//import java.awt.Point;
 
 
 public class CreateShapeCommand implements ICommand, IUndoable{
@@ -20,7 +18,6 @@ public class CreateShapeCommand implements ICommand, IUndoable{
     Color sColor;
     private ShapeShadingType shapeShadingType;
     public IShape iShape;
-//    private Shape shape;
     boolean pastedShape;
 
     public CreateShapeCommand(ApplicationState appState, Point startPoint, Point endPoint, ShapeList shapeList, Color pColor, Color sColor, ShapeShadingType shapeShadingType, ShapeType shapeType){

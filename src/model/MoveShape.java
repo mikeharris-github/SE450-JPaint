@@ -35,7 +35,7 @@ public class MoveShape implements ICommand, IUndoable {
         else if (shapeList.getSelectedShapeList().size()>0){
             for(IShape s : shapeList.getSelectedShapeList()){
                 if(s.getSize()>0){
-                    System.out.println("you trying to move a group?! that's so COOL!!!");
+//                    System.out.println("you trying to move a group?! that's so COOL!!!");
                     s.getGroup().moveChildren(deltaX,deltaY);
                 }
                 else{
@@ -50,11 +50,11 @@ public class MoveShape implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        System.out.println("UNDO called");
+//        System.out.println("UNDO called");
         shapeList.getSelectedShapeList();
         for(IShape s: shapeList.getSelectedShapeList()){
             if(s.getSize()>0){
-                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
+//                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
                 s.getGroup().undoMoveChildren();
             }
             else{
@@ -67,11 +67,11 @@ public class MoveShape implements ICommand, IUndoable {
 
     @Override
     public void redo() {
-        System.out.println("Redo Called");
+//        System.out.println("Redo Called");
         shapeList.getSelectedShapeList();
         for(IShape s: shapeList.getSelectedShapeList()){
             if(s.getSize()>0){
-                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
+//                System.out.println("you trying to UNDO a move a group?! that's so NEAT!!!");
                 s.getGroup().redoMoveChildren();
             }
             else{

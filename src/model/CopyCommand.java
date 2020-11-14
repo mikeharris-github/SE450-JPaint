@@ -17,7 +17,7 @@ public class CopyCommand implements ICommand, IUndoable {
     }
     @Override
     public void run() {
-        System.out.println("Copy Command called");
+//        System.out.println("Copy Command called");
         ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> copiedlist = shapeList.getCopiedShapeList();
         copiedlist.clear();
@@ -25,14 +25,12 @@ public class CopyCommand implements ICommand, IUndoable {
 
         for(IShape s: selectedShapeList){
             copiedlist.add(s);
-            System.out.println("Shape " + s + " copied!");
         }
         CommandHistory.add(this);
     }
 
     @Override
     public void undo() {
-        System.out.println("undoCopy called!");
         ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> copiedlist = shapeList.getCopiedShapeList();
 
@@ -44,7 +42,6 @@ public class CopyCommand implements ICommand, IUndoable {
 
     @Override
     public void redo() {
-        System.out.println("undoCopy called!");
         ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> copiedlist = shapeList.getCopiedShapeList();
 

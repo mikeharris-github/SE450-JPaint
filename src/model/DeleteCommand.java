@@ -19,7 +19,7 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     @Override
     public void run() {
-        System.out.println("Delete Command called");
+//        System.out.println("Delete Command called");
         ArrayList<IShape> myShapeList = shapeList.getShapeList();
         ArrayList<IShape> mySelectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> deletedShapeList = shapeList.getDeletedShapeList();
@@ -30,17 +30,16 @@ public class DeleteCommand implements ICommand, IUndoable {
         else if (mySelectedShapeList.size()!=0){
             for(IShape s: mySelectedShapeList){
                 if(s.getSize()==0){
-                    System.out.println("Removing shape: " + s);
+//                    System.out.println("Removing shape: " + s);
                     myShapeList.remove(s);
                     deletedShapeList.add(s);
                     s.getShape().shapeSelected=false;
                     deleteNum++;
                 }
                 else{
-                    System.out.println("Removing group: " + s);
+//                    System.out.println("Removing group: " + s);
                     myShapeList.remove(s);
                     deletedShapeList.add(s);
-//                    s.getGroup().getChildren().shapeSelected=false;
                     deleteNum++;
                 }
             }
@@ -53,11 +52,11 @@ public class DeleteCommand implements ICommand, IUndoable {
 
     @Override
     public void undo() {
-        System.out.println("undoDelete  called");
+//        System.out.println("undoDelete  called");
         ArrayList<IShape> mainShapeList = shapeList.getShapeList();
         ArrayList<IShape> mySelectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> deletedShapeList = shapeList.getDeletedShapeList();
-        System.out.println("dlistSize: " + deletedShapeList.size());
+//        System.out.println("dlistSize: " + deletedShapeList.size());
 
         if(deleteNum==0){
             deleteNum=deletedShapeList.size();
@@ -75,14 +74,14 @@ public class DeleteCommand implements ICommand, IUndoable {
                 lastShape.getShape().shapeSelected=true;
             }
             shapeList.shapeListDrawer(mainShapeList,shapeList.getSelectedShapeList());
-            System.out.println("BLOOP DELETE");
-            System.out.println("new size: " + deletedShapeList.size());
+//            System.out.println("BLOOP DELETE");
+//            System.out.println("new size: " + deletedShapeList.size());
         }
     }
 
     @Override
     public void redo() {
-        System.out.println("redoDelete  called");
+//        System.out.println("redoDelete  called");
         ArrayList<IShape> mainShapeList = shapeList.getShapeList();
         ArrayList<IShape> mySelectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> deletedShapeList = shapeList.getDeletedShapeList();
@@ -100,7 +99,7 @@ public class DeleteCommand implements ICommand, IUndoable {
             }
             shapeList.shapeListDrawer(mainShapeList,shapeList.getSelectedShapeList());
             deleteNum--;
-            System.out.println("BLOOP DELETE");
+//            System.out.println("BLOOP DELETE");
         }
 
     }

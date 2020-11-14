@@ -56,12 +56,10 @@ public class Shape {
     }
 
     public void undoMove(){
-        System.out.println("UndoMove Triggered!");
         this.setStartPoint(((int)this.getStartPoint().x)-deltaX, ((int)this.getStartPoint().y)-deltaY);
         this.setEndPoint(((int)this.getEndPoint().x)-deltaX, ((int)this.getEndPoint().y)-deltaY);
     }
     public void redoMove(){
-        System.out.println("RedoMove Triggered!");
         this.setStartPoint(((int)this.getStartPoint().x)+deltaX, ((int)this.getStartPoint().y)+deltaY);
         this.setEndPoint(((int)this.getEndPoint().x)+deltaX, ((int)this.getEndPoint().y)+deltaY);
     }
