@@ -71,7 +71,7 @@ public class SelectCommand implements ICommand, IUndoable {
 //            s.getShape().getEndPoint();
 //            System.out.println("Shape: " + s);
 
-            if (s.getSize() > 0) {
+            if (s.isGroup()==true) {
 //                System.out.println("THIS ISHAPE IS A GROUP!");
                 int groupWidth = s.getGroup().getMaxXY().x - (int) s.getGroup().getMinXY().x;
                 int groupHeight = s.getGroup().getMaxXY().x - (int) s.getGroup().getMinXY().x;
@@ -89,9 +89,9 @@ public class SelectCommand implements ICommand, IUndoable {
             }
 
             else{
-                System.out.println("Current ShapeList size: " + myShapeList.size());
-                System.out.println("current shape: " + s);
-                System.out.println("current shapegroup children number: " + s.getSize());
+//                System.out.println("Current ShapeList size: " + myShapeList.size());
+//                System.out.println("current shape: " + s);
+//                System.out.println("current shapegroup children number: " + s.getSize());
 
                 int shapeStartX = (int) Math.min(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());
                 int shapeEndX = (int) Math.max(s.getShape().getStartPoint().getX(), s.getShape().getEndPoint().getX());

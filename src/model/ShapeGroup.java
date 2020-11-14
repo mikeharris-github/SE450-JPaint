@@ -28,8 +28,8 @@ public class ShapeGroup implements IShape {
     }
 
     public IShape removeChild(int i){
-//        System.out.println("REMOVE CHILD INDEX PASSED: " + i);
-        IShape z = children.remove(i);
+        IShape z;
+        z = this.children.remove(i);
 //        System.out.println("RETURNING CHILD: " + i);
         return z;
     }

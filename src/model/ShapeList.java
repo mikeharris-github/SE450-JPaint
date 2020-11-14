@@ -17,6 +17,8 @@ public class ShapeList {
     public static ArrayList<IShape> pasteShapeList = new ArrayList<>();
     public static ArrayList<IShape> deselectedShapeList = new ArrayList<>();
     public static ArrayList<IShape> undoRedoList = new ArrayList<>();
+    public static ArrayList<IShape> groupList = new ArrayList<>();
+
 
     private static PaintCanvas paintCanvas;
     public ApplicationState appState;
@@ -137,6 +139,9 @@ public class ShapeList {
     public ArrayList<IShape> getPasteShapeList() { return pasteShapeList;}
 
     public ArrayList<IShape> getUndoRedoList() { return undoRedoList;}
+
+    public ArrayList<IShape> getGroupList() { return groupList;}
+
 
 
 }

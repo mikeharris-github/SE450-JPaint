@@ -11,7 +11,6 @@ public class GroupCommand implements ICommand, IUndoable {
 
     ShapeList shapeList;
     ShapeGroup shapeGroup;
-    boolean groupCreated;
     int numChildren;
 
 
@@ -19,14 +18,18 @@ public class GroupCommand implements ICommand, IUndoable {
         this.shapeList = shapeList;
     }
 
+//    public IShape createGroup(ShapeList shapeList)
+
 
     @Override
     public void run() {
-        System.out.println("Group Command Pressed!");
+//        System.out.println("Group Command Pressed!");
         ArrayList<IShape> myShapeList = shapeList.getShapeList();
         ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
+        ArrayList<IShape> groupList = shapeList.getGroupList();
 
-        System.out.println("Selected Group size: " + selectedShapeList.size());
+
+//        System.out.println("Selected Group size: " + selectedShapeList.size());
 
         //if the selectedShapeList is empty, end
         if(selectedShapeList.size() <= 0) { System.out.println("There's no selected shapes!"); }
@@ -35,6 +38,9 @@ public class GroupCommand implements ICommand, IUndoable {
         else if(selectedShapeList.size()!= 0){
             //create new group
             shapeGroup = new ShapeGroup();
+            System.out.println("New group: " + shapeGroup);
+            groupList.add(shapeGroup);
+            System.out.println("Added group to grouplist: " + shapeGroup);
             //remove shapes from selectedShapeList and add to group
             for(IShape s : selectedShapeList){
                 //remove shape from main shapelist
@@ -49,20 +55,20 @@ public class GroupCommand implements ICommand, IUndoable {
                 //if current shape is group, add all shapes to new group
                 else if(s.isGroup()==true){
                     s.getGroup().groupSelected=false;
-                    for(IShape z: s.getGroup().getChildren()){
-                        shapeGroup.addChild(z);
-                        numChildren++;
-                    }
-//                    shapeGroup.addChild(s);
-//                    numChildren++;
+//                    for(IShape z: s.getGroup().getChildren()){
+//                        shapeGroup.addChild(z);
+//                        numChildren++;
+//                    }
+                    shapeGroup.addChild(s);
+                    numChildren++;
                 }
-                System.out.println("Removed shape: " + s);
-                System.out.println("Number of shapes in group: " + shapeGroup.getSize());
+//                System.out.println("Removed shape: " + s);
+//                System.out.println("Number of shapes in group: " + shapeGroup.getSize());
             }
             myShapeList.add(shapeGroup);
             selectedShapeList.clear();
             selectedShapeList.add(shapeGroup);
-            System.out.println("Shapes are grouped!");
+//            System.out.println("Shapes are grouped!");
         }
         shapeList.shapeListDrawer(myShapeList,selectedShapeList);
 //        selectedShapeList.clear();
@@ -78,9 +84,7 @@ public class GroupCommand implements ICommand, IUndoable {
         ArrayList<IShape> selectedShapeList = shapeList.getSelectedShapeList();
         ArrayList<IShape> mainShapeList = shapeList.getShapeList();
 
-        //remove shapegroup from selectedShapeList
         selectedShapeList.remove(shapeGroup);
-        //remove group from shapeList
         mainShapeList.remove(shapeGroup);
 
         //remove each shape from shape group iteratively

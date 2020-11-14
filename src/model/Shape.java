@@ -133,6 +133,6 @@ public class Shape {
 
     public void shapeSelected(){
         shapeSelected = !shapeSelected;
-        System.out.println("shapeSelected Boolean: " + shapeSelected);
+//        System.out.println("shapeSelected Boolean: " + shapeSelected);
     }
 }

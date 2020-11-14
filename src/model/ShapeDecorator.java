@@ -17,8 +17,8 @@ public class ShapeDecorator {
     }
 
     public void outlineGroup(IShape s){
-        System.out.println("outlineGroup called!");
-        System.out.println("max x: " + s.getGroup().getMaxXY().x);
+//        System.out.println("outlineGroup called!");
+//        System.out.println("max x: " + s.getGroup().getMaxXY().x);
         int groupWidth = s.getGroup().getMaxXY().x - s.getGroup().getMinXY().x;
         int groupHeight = s.getGroup().getMaxXY().y - s.getGroup().getMinXY().y;
 
