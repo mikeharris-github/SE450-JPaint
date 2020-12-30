@@ -1,6 +1,8 @@
 # SE450-JPaint
 
-As part of my DePaul graduate class SE450 (Object-Oriented Software Development), students were asked to build an "MS Paint"-like application in Java called JPaint. It contains the following features:
+As part of my DePaul graduate class SE450 (Object-Oriented Software Development), students were asked to build an "MS Paint"-like application in Java called JPaint. It allowed the students to implement various design patterns and object-oriented programming concepts such as interfaces, abstract classes, and other concepts that were taught throughout the course. 
+
+The JPaint contains the following features:
 
 - Pick a shape
   - Ellipse
